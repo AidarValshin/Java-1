@@ -1,2 +1,2 @@
 # Java-1
-java for the impatient
+Solutions of tasks from "Core Java for the Impatient"
