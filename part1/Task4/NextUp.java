@@ -1,4 +1,4 @@
-package ru.mephi.java.part1.Task4;
+package ru.mephi.java.part1.task4;
 
 import static java.lang.Math.nextUp;
 

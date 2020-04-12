@@ -1,4 +1,4 @@
-package ru.mephi.java.part2.Task2;
+package ru.mephi.java.part2.task2;
 
 public class NextInt {
     /*

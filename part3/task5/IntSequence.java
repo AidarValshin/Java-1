@@ -1,7 +1,7 @@
 package ru.mephi.java.part3.task5;
 
-interface IntSequence {
-    static IntSequence of(int... list) {
+public interface IntSequence {
+    public static IntSequence of(int... list) {
         // Extra credit for anonymous inner class.
         return new IntSequence() {
             private int pos = 0;
@@ -19,14 +19,14 @@ interface IntSequence {
         };
     }
 
-    static IntSequence constant(int c) {
+    public static IntSequence constant(int c) {
         return () -> c;
     }
 
-    default boolean hasNext() {
+    public default boolean hasNext() {
         return true;
     }
 
-    int next();
+    public int next();
 }
 

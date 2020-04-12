@@ -1,4 +1,4 @@
-package ru.mephi.java.part1.Task2;
+package ru.mephi.java.part1.task2;
 
 import java.util.Scanner;
 import static java.lang.Math.floorMod;

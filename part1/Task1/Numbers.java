@@ -1,5 +1,5 @@
-package ru.mephi.java.part1.Task1;
-import java.util.Scanner;
+package ru.mephi.java.part1.task1;
+import  java.util.Scanner;
 
 public class Numbers {
 

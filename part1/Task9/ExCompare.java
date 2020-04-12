@@ -1,4 +1,4 @@
-package ru.mephi.java.part1.Task9;
+package ru.mephi.java.part1.task9;
 
 
 import java.util.Scanner;

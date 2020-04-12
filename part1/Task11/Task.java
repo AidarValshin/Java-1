@@ -1,4 +1,4 @@
-package ru.mephi.java.part1.Task11;
+package ru.mephi.java.part1.task11;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;

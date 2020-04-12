@@ -16,7 +16,7 @@ public class Employee implements Measurable {
         return this.salary;
     }
 
-    static  double average(Measurable[] objects) {
+    public static  double average(Measurable[] objects) {
         int cnt=0;
         double summ=0;
         for ( Measurable i : objects) {
@@ -26,14 +26,14 @@ public class Employee implements Measurable {
         return summ/cnt;
     }
 
-    static Measurable largest(Measurable[] objects){
+    public static Measurable largest(Measurable[] objects){
         Measurable res=null;
         double val1=0;
         double val2=0;
         for ( Measurable i : objects) {
             val2+=i.getMeasure();
             if(val2>val1)
-            {
+            {   val1=val2;
                 res=i;
             }
         }

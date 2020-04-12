@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Lucky {
-    static void luckySort(ArrayList<String> strings, Comparator<String> comp) {
+    public static void luckySort(ArrayList<String> strings, Comparator<String> comp) {
         String first = null;
         String second = null;
         boolean fl = true;
-        while (fl == true) {
+        while (fl) {
             fl = false;
             for (int i = 0; i < strings.size(); i++) {
                 first = strings.get(i);
@@ -21,7 +21,7 @@ public class Lucky {
                     break;
                 }
             }
-            if (fl == true) {
+            if (fl) {
                 Collections.shuffle(strings);
             }
         }

@@ -1,4 +1,4 @@
-package ru.mephi.java.part1.Task13;
+package ru.mephi.java.part1.task13;
 import java.util.Random;
 import java.util.*;
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Main {
-    static class Sortbyname implements Comparator<String> {
+    public static class Sortbyname implements Comparator<String> {
         @Override
         public int compare(String a, String b) {
             return a.compareTo(b);

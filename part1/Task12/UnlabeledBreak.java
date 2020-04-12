@@ -1,4 +1,4 @@
-package ru.mephi.java.part1.Task12;
+package ru.mephi.java.part1.task12;
 
 public class UnlabeledBreak {
     public static void main(String args[]) {

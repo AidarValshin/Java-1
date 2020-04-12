@@ -1,4 +1,4 @@
-package ru.mephi.java.part1.Task10;
+package ru.mephi.java.part1.task10;
 import java.util.Random;
 public class RandomString
 {

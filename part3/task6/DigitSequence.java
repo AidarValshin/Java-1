@@ -5,7 +5,7 @@ import java.util.Iterator;
 public class DigitSequence implements Iterator<Integer> {
     private int number;
 
-    DigitSequence(int numb) {
+    public  DigitSequence(int numb) {
         number = numb;
     }
 
@@ -15,7 +15,7 @@ public class DigitSequence implements Iterator<Integer> {
     }
 
     @Override
-    public Integer next() { // for java>=8
+    public Integer next() {
         int result = number % 10;
         number /= 10;
         return result;

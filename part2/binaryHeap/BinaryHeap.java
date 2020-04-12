@@ -6,7 +6,7 @@ public class BinaryHeap {
     private ArrayList<Integer> arr = new ArrayList();
 
     //О(N)
-    BinaryHeap(ArrayList<Integer> newArr) {
+   public BinaryHeap(ArrayList<Integer> newArr) {
         arr = (ArrayList<Integer>) newArr.clone();
         int size = arr.size();
         for (int i = size / 2; i >= 0; i--) {
@@ -18,7 +18,7 @@ public class BinaryHeap {
         return arr.size();
     }
 
-    public void recoverAdd(int i) {
+    private void recoverAdd(int i) {
         int parent = (i - 1) / 2;
         while (i > 0 && (arr.get(i) > arr.get(parent))) {
             int temp = arr.get(i);
@@ -32,12 +32,12 @@ public class BinaryHeap {
     //O(log2 N)
     public void add(int item) {
         int size = arr.size();
-        arr.add( item);
+        arr.add(item);
         recoverAdd(size);
     }
 
     //O(log2 N)
-    public void heapRecover(int i) {
+    private void heapRecover(int i) {
         int leftChild;
         int rightChild;
         int parent;
@@ -69,13 +69,11 @@ public class BinaryHeap {
     //O(log2 N)
     public int getMax() {
         int result = arr.get(0);
-        int size =arr.size();
-        if(size!=1) {
+        int size = arr.size();
+        if (size != 1) {
             int tmp = arr.remove(size - 1);
             arr.set(0, tmp);
-        }
-        else
-        {
+        } else {
             arr.remove(0);
         }
         size = arr.size();
@@ -92,10 +90,10 @@ public class BinaryHeap {
     public static ArrayList<Integer> heapSort(ArrayList<Integer> arr) {
         BinaryHeap heap = new BinaryHeap(arr);
         int size = arr.size();
-        ArrayList<Integer> arr1 =new ArrayList(size);
-        for (int i = 0; i <size; i++) {
-            arr1.add( heap.getMax());
-            heap.heapRecover(0);
+        ArrayList<Integer> arr1 = new ArrayList(size);
+        for (int i = 0; i < size; i++) {
+            arr1.add(heap.getMax());
+           // heap.heapRecover(0);
         }
         return arr1;
     }

@@ -1,4 +1,4 @@
-package ru.mephi.java.part1.Task6;
+package ru.mephi.java.part1.task6;
 import    java.math.BigInteger;
 public class Factorial {
     public  static void main(String[] args)

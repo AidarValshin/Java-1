@@ -1,4 +1,4 @@
-package ru.mephi.java.part1.AddTask;
+package ru.mephi.java.part1.addTask;
 
 import java.util.Arrays;
 

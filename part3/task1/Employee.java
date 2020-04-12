@@ -16,7 +16,7 @@ public class Employee implements Measurable {
         return this.salary;
     }
 
-    static  double average(Measurable[] objects) {
+    public static  double average(Measurable[] objects) {
         int cnt=0;
         double summ=0;
         for ( Measurable i : objects) {

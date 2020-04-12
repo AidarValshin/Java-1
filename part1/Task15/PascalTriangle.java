@@ -1,4 +1,4 @@
-package ru.mephi.java.part1.Task15;
+package ru.mephi.java.part1.task15;
 
 import java.util.ArrayList;
 import java.util.Scanner;
