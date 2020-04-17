@@ -3,7 +3,8 @@ package ru.mephi.java.part3.mycomparator;
 import java.util.Comparator;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
-public interface MyComparator extends Comparator<Employee> {
+
+public interface MyComparator {
 
 
     int compare(Employee o1, Employee o2);
@@ -18,13 +19,21 @@ public interface MyComparator extends Comparator<Employee> {
     }
 
 
-
     default MyComparator thenComparing(MyComparator other) {
         return (MyComparator) (c1, c2) -> {
             int res = compare(c1, c2);
             return (res != 0) ? res : other.compare(c1, c2);
         };
     }
+
+    default MyComparator thenComparing(Function<Employee, String> func) {
+        return this.thenComparing(comparing(func));
+    }
+
+    default MyComparator thenComparing(ToIntFunction<Employee> func) {
+        return this.thenComparing(comparingInt(func));
+    }
+
 
     public static MyComparator comparingInt(ToIntFunction<Employee> func) {
         return (MyComparator) (c1, c2) -> Integer.compare(func.applyAsInt(c1), func.applyAsInt(c2));
@@ -48,14 +57,13 @@ public interface MyComparator extends Comparator<Employee> {
             }
         };
     }
-    /*
-    public static Comparator<Employee> toComparator() {
-        return () ->   {
 
-        };
-         */
-       
+    public static Comparator<Employee> toComparator(MyComparator myComp) {
+        Comparator<Employee> comp = (first, second) -> myComp.compare(first, second);
+        return comp;
+
     }
+}
 
 
 
