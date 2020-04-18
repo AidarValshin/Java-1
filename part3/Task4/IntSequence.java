@@ -1,4 +1,4 @@
-package ru.mephi.java.part3.Task4;
+package ru.mephi.java.part3.task4;
 
 public interface IntSequence {
     public static IntSequence of(int... list) {
@@ -6,10 +6,6 @@ public interface IntSequence {
         return new IntSequence() {
             private int pos = 0;
 
-            @Override
-            public boolean hasNext() {
-                return pos < list.length;
-            }
 
             @Override
             public int next() {
@@ -18,7 +14,10 @@ public interface IntSequence {
         };
     }
 
-   public boolean hasNext();
+   public default  boolean hasNext(){
+        return true;
+
+   }
 
    public int next();
 }

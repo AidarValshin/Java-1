@@ -1,4 +1,4 @@
-package ru.mephi.java.part3.Task4;
+package ru.mephi.java.part3.task4;
 
 public class Main {
     public static void main(String[] args) {

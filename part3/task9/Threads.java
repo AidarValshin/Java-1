@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Threads {
     public static void runTogether(Runnable... tasks) throws InterruptedException {
-        ExecutorService es = Executors.newFixedThreadPool(tasks.length);
+        ExecutorService es = Executors.newFixedThreadPool(tasks.length); //  new thread (task.start)
         for (Runnable task : tasks) {
             es.submit(task);
         }

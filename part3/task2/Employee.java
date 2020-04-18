@@ -1,8 +1,6 @@
 package ru.mephi.java.part3.task2;
 
-interface Measurable {
-    double getMeasure();
-}
+
 
 public class Employee implements Measurable {
     private double salary;
