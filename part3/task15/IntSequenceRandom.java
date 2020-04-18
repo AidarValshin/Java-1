@@ -1,6 +1,6 @@
 package ru.mephi.java.part3.task15;
 
-import ru.mephi.java.part3.Task4.IntSequence;
+import ru.mephi.java.part3.task4.IntSequence;
 
 import java.util.Random;
 

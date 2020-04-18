@@ -58,8 +58,8 @@ public interface MyComparator {
         };
     }
 
-    public static Comparator<Employee> toComparator(MyComparator myComp) { // сделать instance
-        Comparator<Employee> comp = (first, second) -> myComp.compare(first, second);
+    public default Comparator<Employee> toComparator() { // сделать instance
+        Comparator<Employee> comp = (first, second) -> this.compare(first, second);
         return comp;
 
     }
