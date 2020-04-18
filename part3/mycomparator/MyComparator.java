@@ -49,7 +49,7 @@ public interface MyComparator {
     }
 
     public static MyComparator nullsFirst(MyComparator comparator) {
-        return (MyComparator) (c1, c2) -> {
+        return (c1, c2) -> {
             if (c1 == null) {
                 return (c2 == null) ? 0 : -1;
             } else if (c2 == null) {
@@ -64,14 +64,11 @@ public interface MyComparator {
         Comparator<Employee> comp = (first, second) -> this.compare(first, second);
         return comp;
     }
-
-
+    /*public default Comparator<String> toStrComparator() { // сделать instance
+        Comparator<String> comp = (first, second) -> first.compareTo(second);
+        return comp;
     }
 
+     */
 
-
-
-
-
-
-
+}
