@@ -14,9 +14,12 @@ public interface MyComparator {
         return (c1, c2) -> func.apply(c1).compareTo(func.apply(c2));
     }
 
-    public static MyComparator comparing(Function<Employee, String> func, MyComparator comp) {
+    public static MyComparator comparing(Function<Employee, String> func, Comparator<String> comp) {
         return (c1, c2) -> comp.compare(func.apply(c1), func.apply(c2));
+
     }
+
+
 
 
     default MyComparator thenComparing(MyComparator other) {
@@ -40,9 +43,8 @@ public interface MyComparator {
     }
 
     public static MyComparator naturalOrder() { //исправить employee релизует камперабле.копаре то
-        return (MyComparator) (c1, c2) -> {
-            int res = c1.getName().compareTo(c2.getName());
-            return (res != 0) ? res : Double.compare(c1.getSalary(), (c2.getSalary()));
+        return (MyComparator) (c1, c2) -> { return c1.compareTo(c2);
+
         };
     }
 
@@ -61,9 +63,11 @@ public interface MyComparator {
     public default Comparator<Employee> toComparator() { // сделать instance
         Comparator<Employee> comp = (first, second) -> this.compare(first, second);
         return comp;
+    }
+
 
     }
-}
+
 
 
 

@@ -65,7 +65,7 @@ public class Main {
         print(employee1, employee1.length);
 
         System.out.println("nullsFirst(Comparator.naturalOrder()");
-        Arrays.sort(employee1, (MyComparator.comparing(Employee::getName, Comparator.nullsFirst(Comparator.naturalOrder()))).toComparator());
+        Arrays.sort(employee1, (MyComparator.comparing(Employee::getName,  MyComparator.nullsFirst(MyComparator.naturalOrder()).toComparator())).toComparator());
         print(employee1, employee1.length);
         Arrays.sort(employee1, Comparator.comparing(Employee::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
         print(employee1, employee1.length);
