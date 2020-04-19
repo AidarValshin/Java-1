@@ -33,11 +33,5 @@ public class Lucky {
         }
     }
 
-    public static void print(ArrayList<Employee> employee, int n) {
-        System.out.println(" ");
-        for (int i = 0; i < n; i++) {
-            System.out.println(employee.get(i).name + " " + employee.get(i).salary);
-        }
-        System.out.println();
-    }
+   
 }

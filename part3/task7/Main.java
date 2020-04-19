@@ -36,7 +36,7 @@ public class Main {
             }
         }
         Lucky.luckySort(ar2, MyComparator.comparing(Employee::getName).thenComparing(Employee::getSalary).toComparator());
-        Lucky.print(ar2, ar2.size());
+        print(ar2, ar2.size());
     }
 
     public static class Sortbyname implements Comparator<String> {
@@ -53,7 +53,13 @@ public class Main {
         }
 
     }
-
+ public static void print(ArrayList<Employee> employee, int n) {
+        System.out.println(" ");
+        for (int i = 0; i < n; i++) {
+            System.out.println(employee.get(i).name + " " + employee.get(i).salary);
+        }
+        System.out.println();
+    }
 
 }
 
