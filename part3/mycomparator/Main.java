@@ -4,9 +4,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static ru.mephi.java.part3.mycomparator.MyComparator.* ;
-
-
 public class Main {
     public static void main(String[] args) {
         List<String> supplierNames = Arrays.asList("DDDD", "A", "CCC", "BB");
@@ -48,17 +45,17 @@ public class Main {
 
 
         System.out.println(" comparing(Employee::getName, (s,t) -> s.length() - t.length())");
-        Arrays.sort(employee,(MyComparator.comparing(Employee::getName, (s, t) -> (s.toString().length() - t.toString().length()))).toComparator());
+        Arrays.sort(employee, (MyComparator.comparing(Employee::getName, (s, t) -> (s.toString().length() - t.toString().length()))).toComparator());
         print(employee, employee.length);
         Arrays.sort(employee, Comparator.comparing(Employee::getName, (s, t) -> s.length() - t.length()));
         print(employee, employee.length);
-/*
-    System.out.println("thenComparing(Employee::getName)");
+
+        System.out.println("thenComparing(Employee::getName)");
         Arrays.sort(employee, Comparator.comparing(Employee::getSalary).thenComparing(Employee::getName));
         print(employee, employee.length);
-        Arrays.sort(employee, MyComparator.comparingInt(Employee::getSalary).thenComparing(Employee::getName)).toComparator();
+        Arrays.sort(employee, MyComparator.comparing(Employee::getSalary).thenComparing(Employee::getName).toComparator());
         print(employee, employee.length);
- */
+
 
         Employee[] employee1 = new Employee[9];
         for (int i = 0; i < 4; i++) {
@@ -71,10 +68,14 @@ public class Main {
         print(employee1, employee1.length);
 
         System.out.println("nullsFirst(Comparator.naturalOrder()");
-        Arrays.sort(employee1, (MyComparator.comparing(Employee::getName,MyComparator.nullsFirst(MyComparator.naturalOrder()).toComparator())).toComparator());
+        Arrays.sort(employee1, (MyComparator.comparing(Employee::getName, MyComparator.nullsFirst(MyComparator.naturalOrder()))).toComparator());
         print(employee1, employee1.length);
         Arrays.sort(employee1, Comparator.comparing(Employee::getName, Comparator.nullsFirst(Comparator.naturalOrder())));
         print(employee1, employee1.length);
+
+        System.out.println("compareble");
+        Arrays.sort(employee);
+        print(employee, employee.length);
 
     }
 

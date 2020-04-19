@@ -4,47 +4,55 @@ import java.util.Comparator;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
-public interface MyComparator {
+public interface MyComparator<T> {
+    int compare(T o1, T o2);
 
 
-    int compare(Employee o1, Employee o2);
-
-
-    public static MyComparator comparing(Function<Employee, String> func) {
+    public static MyComparator<Employee> comparing(Function<Employee, String> func) {
         return (c1, c2) -> func.apply(c1).compareTo(func.apply(c2));
     }
 
-    public static MyComparator comparing(Function<Employee, String> func, Comparator<String> comp) {
+    public static MyComparator<Employee> comparing(ToIntFunction<Employee> func) {
+        return (MyComparator<Employee>) (c1, c2) -> Integer.compare(func.applyAsInt(c1), func.applyAsInt(c2));
+    }
+
+    public static MyComparator<Employee> comparing(Function<Employee, String> func, MyComparator<String> comp) {
         return (c1, c2) -> comp.compare(func.apply(c1), func.apply(c2));
 
     }
 
 
-
-
-    default MyComparator thenComparing(MyComparator other) {
-        return (MyComparator) (c1, c2) -> {
+    default MyComparator<T> thenComparing(MyComparator other) {
+        return (MyComparator<T>) (c1, c2) -> {
             int res = compare(c1, c2);
             return (res != 0) ? res : other.compare(c1, c2);
         };
     }
 
-    default MyComparator thenComparing(Function<Employee, String> func) {
-        return this.thenComparing(comparing(func));
+    default MyComparator<T> thenComparing(Function<T, String> func) {
+        return (MyComparator<T>) (c1, c2) -> {
+            int res = compare(c1, c2);
+            return (res != 0) ? res : func.apply(c1).compareTo(func.apply(c2));
+        };
     }
 
-    default MyComparator thenComparing(ToIntFunction<Employee> func) {
-        return this.thenComparing(comparingInt(func));
+
+    default MyComparator<T> thenComparing(ToIntFunction<Employee> func) {
+        return (MyComparator<T>) (c1, c2) -> {
+            int res = compare(c1, c2);
+            return (res != 0) ? res : Integer.compare(func.applyAsInt((Employee) c1), func.applyAsInt((Employee) c2));
+        };
     }
 
 
     public static MyComparator comparingInt(ToIntFunction<Employee> func) {
-        return (MyComparator) (c1, c2) -> Integer.compare(func.applyAsInt(c1), func.applyAsInt(c2));
+        return (MyComparator<Employee>) (c1, c2) -> Integer.compare(func.applyAsInt(c1), func.applyAsInt(c2));
     }
 
-    public static MyComparator naturalOrder() { //исправить employee релизует камперабле.копаре то
-        return (MyComparator) (c1, c2) -> { return c1.compareTo(c2);
 
+    public static MyComparator naturalOrder() {
+        return (MyComparator<String>) (c1, c2) -> {
+            return c1.compareTo(c2);
         };
     }
 
@@ -61,14 +69,8 @@ public interface MyComparator {
     }
 
     public default Comparator<Employee> toComparator() { // сделать instance
-        Comparator<Employee> comp = (first, second) -> this.compare(first, second);
-        return comp;
+        Comparator<T> comp = (first, second) -> this.compare(first, second);
+        return (Comparator<Employee>) comp;
     }
-    /*public default Comparator<String> toStrComparator() { // сделать instance
-        Comparator<String> comp = (first, second) -> first.compareTo(second);
-        return comp;
-    }
-
-     */
 
 }
