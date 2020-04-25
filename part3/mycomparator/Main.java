@@ -45,7 +45,7 @@ public class Main {
 
 
         System.out.println(" comparing(Employee::getName, (s,t) -> s.length() - t.length())");
-        Arrays.sort(employee, (MyComparator.comparing(Employee::getName, (s, t) -> (s.toString().length() - t.toString().length()))).toComparator());
+        Arrays.sort(employee, (MyComparator.comparing(Employee::getName, (s, t) -> (s.length() - t.length()))).toComparator());
         print(employee, employee.length);
         Arrays.sort(employee, Comparator.comparing(Employee::getName, (s, t) -> s.length() - t.length()));
         print(employee, employee.length);

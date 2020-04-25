@@ -8,7 +8,6 @@ public class Threads {
             Thread thread = new Thread(tasks[i]);
             thread.start();
         }
-
     }
 
     public static void runInOrder(Runnable... tasks) {

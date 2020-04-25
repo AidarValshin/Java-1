@@ -8,6 +8,10 @@ public interface MyComparator<T> {
     int compare(T o1, T o2);
 
 
+    default public   MyComparator<T> reversed(){
+        return (c1, c2) -> compare( c2,c1);
+    }
+
     public static MyComparator<Employee> comparing(Function<Employee, String> func) {
         return (c1, c2) -> func.apply(c1).compareTo(func.apply(c2));
     }
