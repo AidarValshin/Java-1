@@ -1,7 +1,5 @@
 package ru.mephi.java.part3.task7;
 
-import ru.mephi.java.part3.mycomparator.Employee;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

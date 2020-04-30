@@ -1,4 +1,4 @@
-package ru.mephi.java.part3.mycomparator;
+package ru.mephi.java.part3.myComparator;
 
 import java.util.Comparator;
 import java.util.function.Function;

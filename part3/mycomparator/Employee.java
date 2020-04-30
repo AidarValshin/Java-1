@@ -1,4 +1,4 @@
-package ru.mephi.java.part3.mycomparator;
+package ru.mephi.java.part3.myComparator;
 
 public class Employee implements Comparable<Employee> {
     public int salary;
