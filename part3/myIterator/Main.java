@@ -22,12 +22,12 @@ public class Main {
         System.out.println(" ");
         System.out.println("union");
         Iterator<String> it1 = states.iterator();
-        MyIterator iter1 = MyIterator.fromIterator(it1);
+       // MyIterator iter1 = MyIterator.fromIterator(it1);
         Iterator<String> it2 = states.iterator();
-        MyIterator iter2 = iter1.union(MyIterator.fromIterator(it2));
+      //  MyIterator iter2 = iter1.union(MyIterator.fromIterator(it2));
         Iterator<String> it3 = states.iterator();
-        MyIterator iter3 = MyIterator.fromIterator(it3);
-        iter3 = iter3.union(iter2);
+        //MyIterator iter3 = MyIterator.fromIterator(it3);
+        MyIterator iter3 = MyIterator.fromIterator(it3).union(MyIterator.fromIterator(it1)).union(MyIterator.fromIterator(it2));
         while (iter3.hasNext()) {
             System.out.println(iter3.next());
         }

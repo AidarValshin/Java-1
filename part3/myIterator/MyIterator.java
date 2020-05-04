@@ -5,39 +5,36 @@ import java.util.function.BiFunction;
 
 public class MyIterator {
     private Iterator<String> iter;
-    private MyIterator iter1;
-    private int numbIter;
+    private MyIterator otherIter;
+    private int currentIter;
+
 
     private MyIterator(Iterator<String> iter) {
-        this(iter, null);
-    }
-
-    private MyIterator(Iterator<String> iter, MyIterator iter1) {
         this.iter = iter;
-        this.iter1 = iter1;
-        this.numbIter = 0;
+        this.otherIter = null;
+        this.currentIter = 0;
     }
 
     public boolean hasNext() {
-        if (iter1 == null) {
+        if (otherIter == null) {
             return iter.hasNext();
         } else {
-            if (numbIter == 0) {
+            if (currentIter == 0) {
                 boolean res = iter.hasNext();
-                if (res == false) {
-                    numbIter = 1;
+                if (!res) {
+                    currentIter = 1;
                 }
             }
-            return (numbIter == 0) ? true : iter1.hasNext();
+            return (currentIter == 0) || otherIter.hasNext();
         }
     }
 
     public String next() {
 
-        if (iter1 == null) {
+        if (otherIter == null) {
             return iter.next();
         } else {
-            return (numbIter == 0) ? iter.next() : iter1.next();
+            return (currentIter == 0) ? iter.next() : otherIter.next();
         }
     }
 
@@ -46,8 +43,18 @@ public class MyIterator {
         return new MyIterator(iter);
     }
 
-    public MyIterator union(MyIterator otherIter) {
-        return new MyIterator(this.iter, otherIter);
+    public MyIterator union(MyIterator otherIter) { // переделать на pipeline
+        if (this.otherIter == null) {
+            this.otherIter = otherIter;
+        } else {
+            MyIterator tmp = this.otherIter;
+            while (tmp.otherIter != null) {
+                tmp = tmp.otherIter;
+            }
+            tmp.otherIter = otherIter;
+
+        }
+        return this;
     }
 
     public String reduce(BiFunction<String, String, String> func) {
