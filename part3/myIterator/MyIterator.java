@@ -44,16 +44,11 @@ public class MyIterator {
     }
 
     public MyIterator union(MyIterator otherIter) { // переделать на pipeline
-        if (this.otherIter == null) {
-            this.otherIter = otherIter;
-        } else {
-            MyIterator tmp = this.otherIter;
-            while (tmp.otherIter != null) {
-                tmp = tmp.otherIter;
-            }
-            tmp.otherIter = otherIter;
-
+        MyIterator tmp = this;
+        while (tmp.otherIter != null) {
+            tmp = tmp.otherIter;
         }
+        tmp.otherIter = otherIter;
         return this;
     }
 
