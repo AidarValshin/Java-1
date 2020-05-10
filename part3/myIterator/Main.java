@@ -7,11 +7,23 @@ import java.util.function.BiFunction;
 public class Main {
 
     public static void main(String[] args) {
-        ArrayList<String> states = new ArrayList<String>();
+        ArrayList<String> states = new ArrayList<>();
         states.add("Germany");
         states.add("France");
         states.add("Italy");
         states.add("Spain");
+
+        ArrayList<String> states1 = new ArrayList<>();
+        states1.add("Germany1");
+        states1.add("France1");
+        states1.add("Italy1");
+        states1.add("Spain1");
+
+        ArrayList<String> states2 = new ArrayList<>();
+        states2.add("Germany2");
+        states2.add("France2");
+        states2.add("Italy2");
+        states2.add("Spain2");
 
         Iterator<String> it0 = states.iterator();
         MyIterator iter0 = MyIterator.fromIterator(it0);
@@ -22,12 +34,14 @@ public class Main {
         System.out.println(" ");
         System.out.println("union");
         Iterator<String> it1 = states.iterator();
-       // MyIterator iter1 = MyIterator.fromIterator(it1);
-        Iterator<String> it2 = states.iterator();
-      //  MyIterator iter2 = iter1.union(MyIterator.fromIterator(it2));
-        Iterator<String> it3 = states.iterator();
-        //MyIterator iter3 = MyIterator.fromIterator(it3);
-        MyIterator iter3 = MyIterator.fromIterator(it3).union(MyIterator.fromIterator(it1)).union(MyIterator.fromIterator(it2));
+        Iterator<String> it2 = states1.iterator();
+        Iterator<String> it3 = states2.iterator();
+        MyIterator iter3 = MyIterator.fromIterator(it1).union(MyIterator.fromIterator(it2)).union(MyIterator.fromIterator(it3));
+
+        for (int i=0;i<8;i++){
+            iter3.hasNext();
+            System.out.println(iter3.next());
+        }
         while (iter3.hasNext()) {
             System.out.println(iter3.next());
         }
