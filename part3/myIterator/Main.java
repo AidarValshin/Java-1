@@ -37,11 +37,7 @@ public class Main {
         Iterator<String> it2 = states1.iterator();
         Iterator<String> it3 = states2.iterator();
         MyIterator iter3 = MyIterator.fromIterator(it1).union(MyIterator.fromIterator(it2)).union(MyIterator.fromIterator(it3));
-
-        for (int i=0;i<8;i++){
-            iter3.hasNext();
-            System.out.println(iter3.next());
-        }
+        
         while (iter3.hasNext()) {
             System.out.println(iter3.next());
         }
