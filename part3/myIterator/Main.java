@@ -37,15 +37,21 @@ public class Main {
         Iterator<String> it2 = states1.iterator();
         Iterator<String> it3 = states2.iterator();
         MyIterator iter3 = MyIterator.fromIterator(it1).union(MyIterator.fromIterator(it2)).union(MyIterator.fromIterator(it3));
-        
+
         while (iter3.hasNext()) {
             System.out.println(iter3.next());
         }
+
+
         System.out.println(" ");
         System.out.println("reduce");
-        Iterator<String> it4 = states.iterator();
-        MyIterator iter4 = MyIterator.fromIterator(it4);
+        Iterator<String> it11 = states.iterator();
+        Iterator<String> it12 = states1.iterator();
+        Iterator<String> it13 = states2.iterator();
+
         BiFunction<String, String, String> func = (x, y) -> x + y;
-        System.out.println(iter4.reduce(func));
+        System.out.println(MyIterator.fromIterator(it11)
+                .union(MyIterator.fromIterator(it12)).union(MyIterator.fromIterator(it13))
+                .reduce((x, y) -> x + y));
     }
 }
