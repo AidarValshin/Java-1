@@ -1,25 +1,27 @@
 package ru.mephi.java.part4.classLoader;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import java.net.URL;
-import java.net.URLClassLoader;
+public class MyClassLoader extends ClassLoader {
 
-public class MyClassLoader {
-    public static void main(String[] args) throws ClassNotFoundException {
-        ClassLoader cl = MyClassLoader.
-                class.getClassLoader();
-        URLClassLoader ucl1 = (URLClassLoader) cl;
-        for (
-                URL u : ucl1.getURLs()) {
-            System.out.println(u);
+    @Override
+    public Class findClass(String name) {
+        byte[] bytes = new byte[0];
+        try {
+            bytes = loadClassFromFile(name);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        // file:/C:/dev/git/java-basics/target/classes/
-        URL[] urls = ucl1.getURLs();
-        URLClassLoader ucl2 = new URLClassLoader(
-                urls, cl.getParent());
-        Class<?> clazz = Class.forName(
-                "ru.mephi.java.ch04.sec04.ClassLoadersUsage",
-                true, ucl2);
+        return defineClass(bytes, 0, bytes.length);
+    }
+
+    private byte[] loadClassFromFile(String fileName) throws IOException {
+        Path path = Paths.get(fileName);
+        byte[] res = Files.readAllBytes(path);
+        return res;
     }
 }
