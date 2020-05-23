@@ -5,7 +5,7 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 public class MethodPrinter {
-    public static void printMethods(Object obj) throws ClassNotFoundException {
+    public static void printMethods(Object obj) {
         Class<?> cl = obj.getClass();
         while (cl != null) {
             for (Method m : cl.getDeclaredMethods()) {

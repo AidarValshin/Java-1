@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         Point p = new Point(2, 3);
         System.out.println(p.getX() + " " + p.getY());
-        // p.x;
+        //System.out.println(p.x);
         LabeledPoint lP = new LabeledPoint("first", 4, 5);
         System.out.println(lP.getLabel() + " " + lP.getX() + " " + lP.getY());
 
