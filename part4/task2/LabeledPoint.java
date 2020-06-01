@@ -19,6 +19,9 @@ public class LabeledPoint extends Point {
 
     @Override
     public boolean equals(Object otherObject) {
+        if (this== null){
+            return false;
+        }
         if(!super.equals(otherObject)){
             return false;
         }

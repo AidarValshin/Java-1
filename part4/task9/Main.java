@@ -1,21 +1,21 @@
 package ru.mephi.java.part4.task9;
 
-
-import ru.mephi.java.part4.task5.*;
+import ru.mephi.java.part4.task5.Circle;
+import ru.mephi.java.part4.task5.Point;
 
 public class Main {
     public static void main(String[] args) throws IllegalAccessException {
-        Shape circle = new Circle(new Point(1, 2), 2);
-        System.out.println(UniversalToString.toString(circle));
+        Circle circle = new Circle(new Point(1, 2), 2);
 
-        //Rectangle
-        Shape rectangle = new Rectangle(new Point(2, 2), 4, 2);
-        System.out.println(UniversalToString.toString(rectangle));
+        AdditionalClasses a = new AdditionalClasses();
+        a.c = circle;
+        a.next = new AdditionalClasses();
+        a.next.c = new Circle(new Point(2, 2), 3);
+        a.next.next = new AdditionalClasses();
+        a.next.next.c = circle;
+        a.next.next.next = a;
 
-        //Line
-        Shape line = new Line(new Point(1, 1), new Point(3, 3));
-        System.out.println(UniversalToString.toString(line));
-
+        System.out.println(UniversalToString.toString(a));
     }
 }
 

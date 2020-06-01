@@ -24,6 +24,9 @@ public class Point {
 
     @Override
     public boolean equals(Object otherObject) {
+       if (this== null){
+           return false;
+       }
         if (this == otherObject) {
             return true;
         }

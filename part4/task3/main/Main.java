@@ -1,8 +1,8 @@
 package ru.mephi.java.part4.task3.main;
 
 
-import ru.mephi.java.part4.task3.classes.LabeledPoint;
-import ru.mephi.java.part4.task3.classes.Point;
+import ru.mephi.java.part4.task3.classes.labeled.LabeledPoint;
+import ru.mephi.java.part4.task3.classes.point.Point;
 
 public class Main {
     public static void main(String[] args) {

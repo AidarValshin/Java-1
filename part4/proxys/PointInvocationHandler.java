@@ -19,7 +19,7 @@ public class PointInvocationHandler implements InvocationHandler {
         System.out.println(point + "." + method.getName()+ " "+ Arrays.toString(args));
         System.out.println(" length vector "+ point.getX()+";"+point.getY()+" from 0;0 = "
                 + Math.sqrt((Math.pow(point.getX(),2)+Math.pow(point.getY(),2))));
-        System.out.println();
+
         Method m=null;
         try {
             m=point.getClass().getMethod(method.getName(),Object.class);
@@ -27,10 +27,8 @@ public class PointInvocationHandler implements InvocationHandler {
             System.out.println(e.toString());
         }
        if(m!=null){
-       //    System.out.println(m.invoke(point, args));
            return m.invoke(point, args);
        }
-     //   System.out.println(method.invoke(point, args));
         return method.invoke(point, args);
 
     }
