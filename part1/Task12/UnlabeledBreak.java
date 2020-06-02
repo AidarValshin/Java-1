@@ -2,7 +2,7 @@ package ru.mephi.java.part1.task12;
 
 public class UnlabeledBreak {
     public static void main(String args[]) {
-        boolean done=true;
+        boolean done = true;
         for (int i = 0; i < 3; i++) {
             if (done == true) {
                 for (int j = 0; j < 3; j++) {
@@ -10,7 +10,6 @@ public class UnlabeledBreak {
                         done = false;
                         break;
                     }
-
                     System.out.print(" [i = " + i + ", j = " + j + "] ");
                 }
             }

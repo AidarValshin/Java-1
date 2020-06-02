@@ -1,5 +1,5 @@
 package ru.mephi.java.part3.task12;
-import ru.mephi.java.part3.task11.FilesInDirectory;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -12,9 +12,8 @@ public class Main {
         System.out.println(result);
         File[] lst = dir.listFiles();
         SortFiles.sortFirstDirectoryByName(lst);
-        for(File f: lst){
+        for (File f : lst) {
             System.out.println(f.getName());
         }
-
     }
 }

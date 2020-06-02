@@ -1,4 +1,8 @@
 package ru.mephi.java.part2.task17;
+//Provide an iterator—an object that yields the elements of the queue in turn—for the
+//queue of the preceding class. Make Iterator a nested class with methods next
+//and hasNext. Provide a method iterator() of the Queue class that yields a
+//Queue.Iterator. Should Iterator be static or not?
 
 import java.util.LinkedList;
 
@@ -34,6 +38,7 @@ public class Queue {
             }
         }
 
+        // bad realization
         public String next() {
             if (hasNext()) {
                 i += 1;

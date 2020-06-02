@@ -6,7 +6,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-       MyInt i=(a)->a+1;
+        MyInt i = (a) -> a + 1;
         i.met(3);
     }
 }

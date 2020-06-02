@@ -1,9 +1,16 @@
 package ru.mephi.java.part4.task13;
 
+//Write a method that prints a table of values for any Method representing a static
+//method with a parameter of type double or Double. Besides the Method object,
+//accept a lower bound, upper bound, and step size. Demonstrate your method by
+//printing tables for Math.sqrt and Double.toHexString. Repeat, using a
+//DoubleFunction<Object> instead of a Method (see Section 3.6.2,
+//“Choosing a Functional Interface,” on p. 113). Contrast the safety, efficiency, and
+//convenience of both approaches.
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.DoubleFunction;
-
 
 public class PrintTable {
     public static void printTableDoubleValuesByInvoke(Method method,
@@ -28,6 +35,5 @@ public class PrintTable {
         for (double value = lower; value <= upper; value += step) {
             System.out.println("Value: " + value + " returns: " + method.apply(value));
         }
-
     }
 }

@@ -1,5 +1,7 @@
 package ru.mephi.java.part4.task2;
 
+//Define toString, equals, and hashCode methods for the classes of the
+//preceding exercise.
 public class Point {
     private double x;
     private double y;
@@ -24,9 +26,9 @@ public class Point {
 
     @Override
     public boolean equals(Object otherObject) {
-       if (this== null){
-           return false;
-       }
+        if (this == null) {
+            return false;
+        }
         if (this == otherObject) {
             return true;
         }
@@ -50,8 +52,6 @@ public class Point {
         result = 31 * result + (int) (tmp ^ (tmp >>> 32));
         return result;
     }
-
-
 }
 
 

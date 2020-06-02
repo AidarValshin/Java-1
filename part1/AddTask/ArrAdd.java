@@ -9,6 +9,7 @@ public class ArrAdd {
         System.out.println(Arrays.toString(arr1));
     }
 
+    // add the number to  the array
     public static int[] add(int[] arr, int a) {
         int len = arr.length;
         int[] arr1 = Arrays.copyOf(arr, (len + 1));

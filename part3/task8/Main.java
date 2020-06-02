@@ -8,7 +8,5 @@ public class Main {
         Thread t2 = new Thread(Task2);
         t1.start();
         t2.start();
-
-
     }
 }

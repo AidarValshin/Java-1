@@ -7,11 +7,11 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         List<String> supplierNames = Arrays.asList("DDDD", "A", "CCC", "BB");
-            Employee[] employee = new Employee[8];
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 2; j++) {
-                    employee[2 * i + j] = new Employee(1000 - 10 * (j + i), supplierNames.get(i));
-                }
+        Employee[] employee = new Employee[8];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 2; j++) {
+                employee[2 * i + j] = new Employee(1000 - 10 * (j + i), supplierNames.get(i));
+            }
         }
         System.out.println("AS IS");
         print(employee, employee.length);

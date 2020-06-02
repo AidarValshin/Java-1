@@ -1,4 +1,5 @@
 package ru.mephi.java.part4.classLoader;
+// my own simple class loader
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,13 +16,13 @@ public class MyClassLoader extends ClassLoader {
         super(parent);
         this.pathtobin = pathtobin;
     }
+
     @Override
     public Class findClass(String name) {
-        Class result= classesHash.get(name);
-        if (result!=null) {
+        Class result = classesHash.get(name);
+        if (result != null) {
             return result;
-        }
-        else{
+        } else {
             byte[] bytes = new byte[0];
             try {
                 String newName = name.replace(".", "/");
@@ -30,16 +31,15 @@ public class MyClassLoader extends ClassLoader {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            result =defineClass(bytes, 0, bytes.length);
-            classesHash.put(name,result);
+            result = defineClass(bytes, 0, bytes.length);
+            classesHash.put(name, result);
             return result;
         }
     }
 
 
-
     private byte[] loadClassFromFile(String fileName) throws IOException {
-        Path path = Paths.get(pathtobin+fileName);
+        Path path = Paths.get(pathtobin + fileName);
         byte[] res = Files.readAllBytes(path);
         return res;
     }

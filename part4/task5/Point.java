@@ -1,5 +1,7 @@
 package ru.mephi.java.part4.task5;
 
+//Define clone methods for the classes of the preceding exercise.
+
 public class Point implements Cloneable {
     protected double x;
     protected double y;
@@ -47,8 +49,9 @@ public class Point implements Cloneable {
         result = 31 * result + (int) (tmp ^ (tmp >>> 32));
         return result;
     }
+
     @Override
-    public Point clone(){
+    public Point clone() {
         return new Point(this.x, this.y);
     }
 

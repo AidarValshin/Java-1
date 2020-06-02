@@ -14,11 +14,11 @@ public class Circle {
         return center;
     }
 
-     class Point {
+    class Point {
         double x;
         double y;
 
-     private    Point(double x, double y) {
+        private Point(double x, double y) {
             this.x = x;
             this.y = y;
         }

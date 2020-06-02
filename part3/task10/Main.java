@@ -1,19 +1,16 @@
 package ru.mephi.java.part3.task10;
+
 import java.io.File;
-import static ru.mephi.java.part3.task10.Subdirectories.*;
 
-public class Main
-{
-    public static void main(String args[])
-    {
-        // Определение директории
+import static ru.mephi.java.part3.task10.Subdirectories.getSubdirectories;
+
+public class Main {
+    public static void main(String args[]) {
+        // dir
         File dir = new File(".");
-        // Чтение полного списка файлов каталога
+        // read files
         File[] lst1 = dir.listFiles();
-        // Чтение списка файлов каталога
-
-        System.out.println ("lst1.length = " + lst1.length);
-
-        System.out.println ("lst2.length = " + getSubdirectories(".").size());
+        System.out.println("lst1.length = " + lst1.length);
+        System.out.println("lst2.length = " + getSubdirectories(".").size());
     }
 }

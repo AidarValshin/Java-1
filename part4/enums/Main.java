@@ -1,37 +1,32 @@
 package ru.mephi.java.part4.enums;
-
+// simple example why enums better than constants
 
 public class Main {
     public static void main(String[] args) {
-        //норм работа
+        //norm
         printConst("XL");
         printEnum(Size1.valueOf("EXTRA_LARGE"));
-        //ошибки
-        printConst("XXXX"); //здесь сами ловим исключение+
-        printEnum(Size1.valueOf("XXXX")); // здесь в рантайме перечисление ловит исключение
-      // printEnum(Size1.EXTRA_LARGE_LARGE); //компилятор сразу указывает на ошибку
+        //errors
+        printConst("XXXX"); // can take every string
+        printEnum(Size1.valueOf("XXXX")); // err in runtime
+        // printEnum(Size1.EXTRA_LARGE_LARGE); //compile error. this element doesnt exist
     }
 
-
-    public static void printConst(String s){
-        if(s.equals(Size2.SMALL)){
+    public static void printConst(String s) {
+        if (s.equals(Size2.SMALL)) {
             System.out.println("SMALL");
-        }
-        else if (s.equals(Size2.MEDIUM)){
+        } else if (s.equals(Size2.MEDIUM)) {
             System.out.println("MEDIUM)");
-        }
-        else if(s.equals(Size2.LARGE)){
+        } else if (s.equals(Size2.LARGE)) {
             System.out.println("LARGE");
-        }
-        else if(s.equals(Size2.EXTRA_LARGE)){
+        } else if (s.equals(Size2.EXTRA_LARGE)) {
             System.out.println("EXTRA_LARGE");
-        }
-        else{
+        } else {
             System.out.println("wrong opperand");
         }
     }
 
-    public static void printEnum(Size1 s){
+    public static void printEnum(Size1 s) {
         System.out.println(s.name());
     }
 }

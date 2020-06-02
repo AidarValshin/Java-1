@@ -3,7 +3,9 @@ package ru.mephi.java.part1.task7;
 import java.util.Scanner;
 
 import static java.lang.Math.floorMod;
-
+//Write a program that reads in two numbers between 0 and 65535, stores them in
+//short variables, and computes their unsigned sum, difference, product, quotient,
+//and remainder, without converting them to int.
 public class Numbers {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);

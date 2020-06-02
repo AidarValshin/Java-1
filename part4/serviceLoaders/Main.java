@@ -5,11 +5,9 @@ import ru.mephi.java.part4.serviceLoaders.Implementaitions.To2Base;
 import ru.mephi.java.part4.serviceLoaders.Implementaitions.To8Base;
 import ru.mephi.java.part4.serviceLoaders.NumericBase.NumericBase;
 
-
-
 public class Main {
     public static void main(String[] args) {
-        NumericBase  t2 = new To2Base();
+        NumericBase t2 = new To2Base();
         System.out.println(t2.encrypt(18));
         System.out.println(t2.decrypt(t2.encrypt(18)));
 

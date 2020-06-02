@@ -2,6 +2,7 @@ package ru.mephi.java.part1.task8;
 
 import java.util.Scanner;
 
+//Write a program that reads a string and prints all of its nonempty substrings.
 public class SubStrings {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -17,6 +18,5 @@ public class SubStrings {
         } else {
             System.out.println("not a line ");
         }
-
     }
 }

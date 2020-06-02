@@ -3,6 +3,8 @@ package ru.mephi.java.part2.task1;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
+//Change the calendar printing program so it starts the week on a Sunday. Also make
+//it print a newline at the end (but only one).
 public class Calendar {
     public static void main(String[] args) {
         System.out.println(" Sun  Mon Tue Wed Thu Fri Sat ");

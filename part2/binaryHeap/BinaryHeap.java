@@ -3,10 +3,10 @@ package ru.mephi.java.part2.binaryHeap;
 import java.util.ArrayList;
 
 public class BinaryHeap {
-    private ArrayList<Integer> arr = new ArrayList();
+    private ArrayList<Integer> arr;
 
     //О(N)
-   public BinaryHeap(ArrayList<Integer> newArr) {
+    public BinaryHeap(ArrayList<Integer> newArr) {
         arr = (ArrayList<Integer>) newArr.clone();
         int size = arr.size();
         for (int i = size / 2; i >= 0; i--) {
@@ -46,19 +46,15 @@ public class BinaryHeap {
             leftChild = 2 * i + 1;
             rightChild = 2 * i + 2;
             parent = i;
-
             if (leftChild < size && (arr.get(leftChild) > arr.get(parent))) {
                 parent = leftChild;
             }
-
             if (rightChild < size && (arr.get(rightChild) > arr.get(parent))) {
                 parent = rightChild;
             }
-
             if (parent == i) {
                 break;
             }
-
             int temp = arr.get(i);
             arr.set(i, arr.get(parent));
             arr.set(parent, temp);
@@ -76,12 +72,7 @@ public class BinaryHeap {
         } else {
             arr.remove(0);
         }
-        size = arr.size();
 
-       /* for (int i = size / 2; i >= 0; i--) {
-            heapRecover(i);
-        }
-                */
         heapRecover(0);
         return result;
     }
@@ -93,7 +84,6 @@ public class BinaryHeap {
         ArrayList<Integer> arr1 = new ArrayList(size);
         for (int i = 0; i < size; i++) {
             arr1.add(heap.getMax());
-           // heap.heapRecover(0);
         }
         return arr1;
     }

@@ -1,4 +1,6 @@
 package ru.mephi.java.part3.task15;
+//Implement the RandomSequence in Section 3.9.1, “Local Classes,” on p. 122 as
+//a nested class, outside the randomInts method.
 
 import ru.mephi.java.part3.task4.IntSequence;
 
@@ -28,5 +30,4 @@ public class IntSequenceRandom {
     public static IntSequence randomInts(int low, int high) {
         return new RandomSequence(low, high);
     }
-
 }

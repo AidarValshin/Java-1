@@ -1,5 +1,8 @@
 package ru.mephi.java.part3.task14;
 
+//Write a call to Arrays.sort that sorts employees by salary, breaking ties by
+//name. Use Comparator.thenComparing. Then do this in reverse order.
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;

@@ -14,15 +14,15 @@ public class LabeledPoint extends Point {
 
     @Override
     public String toString() {
-        return " LabeledPoint [ label = "+ label+ ", toString() = "+super.toString()+ "] ";
+        return " LabeledPoint [ label = " + label + ", toString() = " + super.toString() + "] ";
     }
 
     @Override
     public boolean equals(Object otherObject) {
-        if (this== null){
+        if (this == null) {
             return false;
         }
-        if(!super.equals(otherObject)){
+        if (!super.equals(otherObject)) {
             return false;
         }
         LabeledPoint other = (LabeledPoint) otherObject;
@@ -31,14 +31,14 @@ public class LabeledPoint extends Point {
 
     @Override
     public int hashCode() {
-        int tmp =0;
-        int length=label.length();
-        if(length!=0){
-            for (int i=0;i<length; i++)
-                tmp=tmp*31 + (label.codePointAt(i));
+        int tmp = 0;
+        int length = label.length();
+        if (length != 0) {
+            for (int i = 0; i < length; i++)
+                tmp = tmp * 31 + (label.codePointAt(i));
         }
         int result = super.hashCode();
-        result = 31 * result +tmp ^ (tmp >>> 16);
+        result = 31 * result + tmp ^ (tmp >>> 16);
         return result;
     }
 }

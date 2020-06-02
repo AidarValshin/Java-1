@@ -8,7 +8,6 @@ public class MyIterator {
     private MyIterator otherIter;
     private int currentIter;
 
-
     private MyIterator(Iterator<String> iter) {
         this.iter = iter;
         this.otherIter = null;
@@ -17,7 +16,7 @@ public class MyIterator {
 
     public boolean hasNext() {
         if (otherIter == null) {
-           boolean res =iter.hasNext();
+            boolean res = iter.hasNext();
             return res;
         } else {
             if (currentIter == 0) {

@@ -1,4 +1,5 @@
 package ru.mephi.java.part4.serviceLoaders;
+//simple serviceLoader
 
 import ru.mephi.java.part4.serviceLoaders.NumericBase.NumericBase;
 
@@ -16,7 +17,7 @@ public class Program {
     }
 
     public static void main(String[] args) {
-        int bases[] = {2, 8, 16};
+        int[] bases = {2, 8, 16};
         for (int i : bases) {
             NumericBase converter = getConverter(i);
             int res = converter.encrypt(18);

@@ -1,5 +1,7 @@
 package ru.mephi.java.part4.task3.main;
-
+//Make the instance variables x and y of the Point class in Exercise 1
+//protected. Show that the LabeledPoint class can access these variables only
+//in LabeledPoint instances.
 
 import ru.mephi.java.part4.task3.classes.labeled.LabeledPoint;
 import ru.mephi.java.part4.task3.classes.point.Point;

@@ -1,4 +1,6 @@
 package ru.mephi.java.part4.task9;
+//Write a “universal” toString method that uses reflection to yield a string with all
+//instance variables of an object. Extra credit if you can handle cyclic references.
 
 import ru.mephi.java.part4.task5.Circle;
 import ru.mephi.java.part4.task5.Point;

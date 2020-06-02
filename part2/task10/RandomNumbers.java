@@ -1,10 +1,10 @@
 package ru.mephi.java.part2.task10;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class RandomNumbers {
-    public static int randomElement(ArrayList<Integer> arr) {
+    public static int randomElement(List<Integer> arr) {
         Random r = new Random();
         int len = arr.size();
         if (len == 0) {

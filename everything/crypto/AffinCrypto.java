@@ -2,6 +2,7 @@ package ru.mephi.java.everything.crypto;
 
 import java.util.Scanner;
 
+// простоейшее аффинное преобразование
 public class AffinCrypto {
     public static void main(String[] args) {
         String table = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

@@ -1,4 +1,6 @@
 package ru.mephi.java.part2.task11;
+//Rewrite the Cal class to use static imports for the System and LocalDate
+//classes.
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -9,7 +11,6 @@ import static java.time.LocalDate.of;
 public class Cal {
     public static void cal(int month) {
         System.out.println(" Sun  Mon Tue Wed Thu Fri Sat ");
-
         LocalDate date = of(2020, month, 1);
         DayOfWeek weekday = date.getDayOfWeek();
         int value = weekday.getValue();

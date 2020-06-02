@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-
 public class Main {
     public static void main(String[] args) {
         String a = "a";
@@ -51,15 +50,14 @@ public class Main {
         public int compare(Integer a, Integer b) {
             return Integer.compare(a, b);
         }
-
     }
- public static void print(ArrayList<Employee> employee, int n) {
+
+    public static void print(ArrayList<Employee> employee, int n) {
         System.out.println(" ");
         for (int i = 0; i < n; i++) {
             System.out.println(employee.get(i).name + " " + employee.get(i).salary);
         }
         System.out.println();
     }
-
 }
 

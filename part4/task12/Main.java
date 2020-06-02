@@ -1,10 +1,12 @@
 package ru.mephi.java.part4.task12;
 
+//Measure the performance difference between a regular method call and a method
+//call via reflection.
+
 import ru.mephi.java.part4.task5.Point;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
 
 public class Main {
     public static void main(String[] args) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
@@ -65,7 +67,6 @@ public class Main {
         timeElapsed1 = finish1 - start1;
         System.out.println(" invoke : " + timeElapsed1);
         System.out.println(x1);
-
     }
 }
 

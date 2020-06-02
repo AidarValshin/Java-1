@@ -1,6 +1,7 @@
 package ru.mephi.java.part4.classLoader;
 
 import ru.mephi.java.part4.task1.Point;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
