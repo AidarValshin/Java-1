@@ -12,6 +12,11 @@ public class Main {
         System.out.println(Main.class.getClassLoader().getParent().getParent());
         String path = "C:/Users/ВАР/IdeaProjects/Lec1a/target/classes/";
         MyClassLoader classLoader = new MyClassLoader(path, Main.class.getClassLoader().getParent());
+        //load java.lang.System
+        Class c = classLoader.loadClass("java.lang.reflect.Field");
+      //  Class c1 = classLoader.loadClass("java.lang.reflect.Field11"); class doesnt exist
+        System.out.println(c.getName() + " ,loader: " + c.getClassLoader());
+        //load ru.mephi.java.part4.task1.Point
         Class clazz = classLoader.loadClass("ru.mephi.java.part4.task1.Point");
         Class clazz1 = classLoader.loadClass("ru.mephi.java.part4.task1.Point");
         System.out.println(clazz.getName());
@@ -24,8 +29,9 @@ public class Main {
 
         System.out.println(classLoader.getParent());
         System.out.println(point.getClass().getClassLoader());
-        // Class.forName("ru.mephi.java.part4.task1.Point");// у моего класс лоадер по типу этого
+        Class.forName("java.lang.System");// у моего класс лоадер по типу этого
         Point p = (Point) clazz.getConstructor(double.class, double.class).newInstance(11, 5);
+
     }
 
 }
