@@ -13,8 +13,12 @@ public class Suppressed {
             try {
                 resource.close();
             } catch (RuntimeException e) {
-                   th.addSuppressed(e); //Add to main exception
+                RuntimeException e1 = e;
+
+                if (th != null) {
+                    th.addSuppressed(e); //Add to main exception
                     throw th;
+                }
             }
         }
     }

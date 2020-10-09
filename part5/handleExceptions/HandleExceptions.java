@@ -33,8 +33,7 @@ public class HandleExceptions {
             ArrayList<Double> arrayList1 = readValuesFile
                     .readValues(filename);
         } catch (FileNotFoundException e) {
-            System.out.println("Go to unchecked exception ");
-            throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException("Go to unchecked exception ", e);
         }
     }
 

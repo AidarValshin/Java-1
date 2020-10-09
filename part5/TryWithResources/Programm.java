@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Programm {
-    public static ArrayList<Double> readValues(String inFile,String outFile) {
+    public static ArrayList<Double> readValues(String inFile,String outFile) throws IOException {
         if (inFile == null || inFile.isEmpty()) {
             throw new IllegalArgumentException("invalid inFile:" + inFile);
         }
         File file = new File(inFile);
         ArrayList<Double> arrayList = new ArrayList<>();
-        try (FileReader reader =new FileReader(file);
-             FileWriter fout = new FileWriter(outFile);Scanner scan = new Scanner(reader)) {
+        try ( FileWriter fout = new FileWriter(outFile);
+              Scanner scan = new Scanner(new FileReader(file))) {
             double d;
             double sum;
             while (scan.hasNextLine()) {
@@ -24,25 +24,19 @@ public class Programm {
                         arrayList.add(d);
                         sum+=d;
                     } catch (NumberFormatException e) {
-                        System.out.println("it is not   floating-point number " + e.getMessage());
+                        System.out.println("it is not   floating-point number " );
+                        e.printStackTrace(System.out);
                         // e.printStackTrace();
                     }
                 }
                 fout.write(String.valueOf(sum));
                 fout.write(" \n");
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        catch (NumberFormatException e) {
-            System.out.println("it is not   floating-point number "+e.getMessage());
         }
         return arrayList;
-    } //35
+    } //29
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         readValues("src/main/ru/mephi/resources/part5.ex6_1",
                 "src/main/ru/mephi/resources/part5.TryWithResources");
 

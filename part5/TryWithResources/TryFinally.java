@@ -1,23 +1,25 @@
 package main.ru.mephi.java.part5.TryWithResources;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TryFinally {
-    public static ArrayList<Double> readValues(String inFile, String outFile) {
+    public static ArrayList<Double> readValues(String inFile, String outFile) throws Exception {
+        Exception mainEx = null;
         if (inFile == null || inFile.isEmpty()) {
             throw new IllegalArgumentException("invalid inFile:" + inFile);
         }
         File file = new File(inFile);
         ArrayList<Double> arrayList = new ArrayList<>();
-        FileReader reader = null;
         FileWriter fout = null;
         Scanner scan = null;
         try {
-            reader = new FileReader(file);
             fout = new FileWriter(outFile);
-            scan = new Scanner(reader);
+            scan = new Scanner(new FileReader(file));
             double d;
             double sum;
             while (scan.hasNextLine()) {
@@ -36,35 +38,31 @@ public class TryFinally {
                 fout.write(String.valueOf(sum));
                 fout.write(" \n");
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-            System.out.println("it is not   floating-point number " + e.getMessage());
+            mainEx = e;
         } finally {
             if (scan != null) {
                 scan.close();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
             if (fout != null) {
                 try {
                     fout.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    if (mainEx != null) {
+                        mainEx.addSuppressed(e);
+                    } else {
+                        mainEx = e;
+                    }
                 }
             }
+        }
+        if (mainEx != null) {
+            throw mainEx;
         }
         return arrayList;
     } //57
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         readValues("src/main/ru/mephi/resources/part5.ex6_1",
                 "src/main/ru/mephi/resources/part5.TryWithResources");
 

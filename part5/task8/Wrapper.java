@@ -24,7 +24,7 @@ public class Wrapper<C> implements AutoCloseable {
         function.close();
     }
 
-    public static <K> Wrapper wrap(K inner, AutoCloseable function) {
+    public static <C> Wrapper wrap(C inner, AutoCloseable function) {
         return new Wrapper(inner, function);
     }
 
@@ -53,6 +53,4 @@ public class Wrapper<C> implements AutoCloseable {
             System.err.println(e.getMessage());
         }
     }
-
-
 }
