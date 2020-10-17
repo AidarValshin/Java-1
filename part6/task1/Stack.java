@@ -5,18 +5,6 @@ import java.util.ArrayList;
 public class Stack<E> {
     private ArrayList<E> arrayList = new ArrayList<>();
 
-    public void push(E e) {
-        arrayList.add(e);
-    }
-
-    public E pop() {
-        return arrayList.remove(arrayList.size() - 1);
-    }
-
-    public boolean isEmpty() {
-        return arrayList.isEmpty();
-    }
-
     public static void main(String[] args) {
         Stack<Integer> stack = new Stack<>();
         stack.push(1);
@@ -27,5 +15,17 @@ public class Stack<E> {
             System.out.println(stack.pop());
         }
         System.out.println(stack.isEmpty());
+    }
+
+    public void push(E e) {
+        arrayList.add(e);
+    }
+
+    public E pop() {
+        return arrayList.remove(arrayList.size() - 1);
+    }
+
+    public boolean isEmpty() {
+        return arrayList.isEmpty();
     }
 }

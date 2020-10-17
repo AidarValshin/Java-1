@@ -15,15 +15,6 @@ public class Wrapper<C> implements AutoCloseable {
         this.function = function;
     }
 
-    public C getInner() {
-        return inner;
-    }
-
-    @Override
-    public void close() throws Exception {
-        function.close();
-    }
-
     public static <C> Wrapper wrap(C inner, AutoCloseable function) {
         return new Wrapper(inner, function);
     }
@@ -52,5 +43,14 @@ public class Wrapper<C> implements AutoCloseable {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public C getInner() {
+        return inner;
+    }
+
+    @Override
+    public void close() throws Exception {
+        function.close();
     }
 }

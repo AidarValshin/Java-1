@@ -3,18 +3,18 @@ package main.ru.mephi.java.part6.task2;
 import java.util.Arrays;
 
 class StackO<E> {
-    private Object [] array;
+    private Object[] array;
     private int fill = 0;
 
     public StackO() {
-        array =  new Object[5];
+        array = new Object[5];
     }
 
     public StackO(int initialCapacity) {
         if (initialCapacity <= 0) {
             throw new IllegalArgumentException("size must be > 0");
         }
-        array =  new Object[initialCapacity];
+        array = new Object[initialCapacity];
     }
 
 

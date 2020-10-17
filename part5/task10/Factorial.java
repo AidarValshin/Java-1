@@ -12,7 +12,7 @@ public class Factorial {
                 System.out.println(1);
                 return BigInteger.ONE;
             }
-            BigInteger result =BigInteger.valueOf(n).multiply(factorial(n - 1));
+            BigInteger result = BigInteger.valueOf(n).multiply(factorial(n - 1));
             System.out.println(n);
             return result;
         } catch (IllegalArgumentException ex) {

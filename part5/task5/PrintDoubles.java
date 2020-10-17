@@ -34,9 +34,9 @@ public class PrintDoubles {
             }
         } catch (FileNotFoundException e) {
             System.err.printf("File: %s coul not be found", e.getMessage());
-        }catch (IllegalStateException e) {
+        } catch (IllegalStateException e) {
             System.err.println("Exception is: " + e);
-        }  finally {
+        } finally {
             if (in != null) {
                 in.close();
             }
@@ -48,9 +48,9 @@ public class PrintDoubles {
 
     public static void main(String[] args) {
         PrintDoubles.printIntegersFromFile(new File("src/main/ru/mephi/resources/part5.ex1_1")
-                ,new File("src/main/ru/mephi/resources/part5.ex5"));
+                , new File("src/main/ru/mephi/resources/part5.ex5"));
         PrintDoubles.printIntegersFromFile(new File(" ")
-                ,new File("src/main/ru/mephi/resources/part5.ex5"));
+                , new File("src/main/ru/mephi/resources/part5.ex5"));
     }
 }
 

@@ -5,6 +5,18 @@ import java.util.ArrayList;
 public class Table<K, V> {
     private ArrayList<Entry<K, V>> arrayList = new ArrayList<>();
 
+    public static void main(String[] args) {
+        Table<Integer, Integer> table = new Table<>();
+        table.put(1, 2);
+        table.put(2, 3);
+        System.out.println(table.get(1).getValue());
+        System.out.println(table.get(2).getValue());
+        table.put(1, 10);
+        System.out.println(table.get(1).getValue());
+        table.remove(1);
+        System.out.println(table.get(1));
+    }
+
     public void put(K key, V value) {
         Entry<K, V> entry = null;
         for (int i = 0; i < arrayList.size(); i++) {
@@ -55,19 +67,6 @@ public class Table<K, V> {
         public V getValue() {
             return value;
         }
-    }
-
-
-    public static void main(String[] args) {
-        Table<Integer, Integer> table = new Table<>();
-        table.put(1, 2);
-        table.put(2, 3);
-        System.out.println(table.get(1).getValue());
-        System.out.println(table.get(2).getValue());
-        table.put(1, 10);
-        System.out.println(table.get(1).getValue());
-        table.remove(1);
-        System.out.println(table.get(1));
     }
 
 }

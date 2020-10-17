@@ -1,30 +1,33 @@
 package main.ru.mephi.java.part5.TryWithResources;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Programm {
-    public static ArrayList<Double> readValues(String inFile,String outFile) throws IOException {
+    public static ArrayList<Double> readValues(String inFile, String outFile) throws IOException {
         if (inFile == null || inFile.isEmpty()) {
             throw new IllegalArgumentException("invalid inFile:" + inFile);
         }
         File file = new File(inFile);
         ArrayList<Double> arrayList = new ArrayList<>();
-        try ( FileWriter fout = new FileWriter(outFile);
-              Scanner scan = new Scanner(new FileReader(file))) {
+        try (FileWriter fout = new FileWriter(outFile);
+             Scanner scan = new Scanner(new FileReader(file))) {
             double d;
             double sum;
             while (scan.hasNextLine()) {
                 String[] in = scan.nextLine().split("\\s+");
-                sum=0;
+                sum = 0;
                 for (String res : in) {
                     try {
-                        d=Double.parseDouble(res);
+                        d = Double.parseDouble(res);
                         arrayList.add(d);
-                        sum+=d;
+                        sum += d;
                     } catch (NumberFormatException e) {
-                        System.out.println("it is not   floating-point number " );
+                        System.out.println("it is not   floating-point number ");
                         e.printStackTrace(System.out);
                         // e.printStackTrace();
                     }

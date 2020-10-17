@@ -1,8 +1,8 @@
 package main.ru.mephi.java.Employee;
 
-public class Employee  {
-private String name;
-private int salary;
+public class Employee {
+    private String name;
+    private int salary;
 
     public Employee(String name, int salary) {
         this.name = name;

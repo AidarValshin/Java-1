@@ -10,7 +10,7 @@ public class Main {
         while (!stack.isEmpty()) {
             System.out.println(stack.pop());
         }
-        System.out.println("Is empty? "+stack.isEmpty());
+        System.out.println("Is empty? " + stack.isEmpty());
         System.out.println();
 
         StackO<Integer> stackO = new StackO<>();
@@ -21,6 +21,6 @@ public class Main {
         while (!stackO.isEmpty()) {
             System.out.println(stackO.pop());
         }
-        System.out.println("Is empty? "+stackO.isEmpty());
+        System.out.println("Is empty? " + stackO.isEmpty());
     }
 }

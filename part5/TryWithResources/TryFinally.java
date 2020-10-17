@@ -3,7 +3,6 @@ package main.ru.mephi.java.part5.TryWithResources;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,22 +31,30 @@ public class TryFinally {
                         sum += d;
                     } catch (NumberFormatException e) {
                         System.out.println("it is not   floating-point number " + e.getMessage());
-                        // e.printStackTrace();
+                        e.printStackTrace(System.out);
                     }
                 }
                 fout.write(String.valueOf(sum));
                 fout.write(" \n");
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             mainEx = e;
         } finally {
             if (scan != null) {
-                scan.close();
+                try {
+                    scan.close();
+                } catch (Exception e) {
+                    if (mainEx != null) {
+                        mainEx.addSuppressed(e);
+                    } else {
+                        mainEx = e;
+                    }
+                }
             }
             if (fout != null) {
                 try {
                     fout.close();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     if (mainEx != null) {
                         mainEx.addSuppressed(e);
                     } else {
