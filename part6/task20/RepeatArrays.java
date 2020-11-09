@@ -18,7 +18,10 @@ public class RepeatArrays {
     }
 
     public static void main(String[] args) {
-        Arrays.stream(repeat(10, 1, 2, 3, 4, 5, 6, 7, 8, 9))
+       Object [] objs= repeat(10, new Object(),"A", "B", "C",
+                (Object) "D",(Object) "E",(Object) "F", (Object)"G", (Object)"H",(Object) "E");
+        System.out.println(objs[0].getClass());
+        Arrays.stream(repeat(2, 1, 2, 3, 4, 5, 6, 7, 8, 9))
                 .forEach(System.out::println);
     }
 }

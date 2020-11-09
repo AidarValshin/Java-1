@@ -6,16 +6,17 @@ import main.ru.mephi.java.Employee.Manager;
 import java.util.ArrayList;
 
 public class Ext {
-    public static void readEmpl1(ArrayList<Employee> empl) {
+    public static void readEmplName1(ArrayList<Employee> empl) {
         for (Employee em : empl) {
-            System.out.println(em);
+            System.out.println(em.getName());
         }
-    }
+            }
 
-    public static void readEmpl2(ArrayList<? extends Employee> empl) {
+    public static void readEmplName2(ArrayList<? extends Employee> empl) {
         for (Employee em : empl) {
-            System.out.println(em);
+            System.out.println(em.getName());
         }
+       // empl.add(new Manager("A",100,100));
     }
 
     public static void main(String[] args) {
@@ -26,10 +27,12 @@ public class Ext {
         arrayList.add(m1);
         arrayList.add(m2);
         arrayList.add(m3);
-        //   arrayList.add(new Employee("A",100));
-        // ArrayList<Employee> arrayList1 = arrayList;
+        // arrayList.add(new Employee("A",100));
+        // ArrayList<Employee> arrayList1 = arrayList;  // инвариантность дженериков
+        Employee[] employees = new Manager[5]; // ковариатость массивов
+        employees[0] = new Employee("A", 100);
         ArrayList<? extends Employee> arrayList2 = arrayList;
-        // readEmpl1(arrayList);
-        readEmpl2(arrayList);
+        //   readEmplName1(arrayList); //инвариантность  дженериков
+        readEmplName2(arrayList);
     }
 }
