@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TestClass1 {
     public List<Number> list2;
-    public List<? super Number> list;
+    public List<? extends Number> list;
     protected List<? extends Comparable<? super Employee>> employees;
     private Pair<? extends String, ? super Double> pair;
     private Employee employee;

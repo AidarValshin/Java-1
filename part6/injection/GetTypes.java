@@ -23,11 +23,11 @@ public class GetTypes {
             if (lower.length > 0) {
                 String description = lower[0].getTypeName();
                 description = checkReplaceFromMap(map, description);
-                linkedListType = new LinkedListType(description, false);
+                linkedListType = new LinkedListType(description, false,false);
             } else if (upper.length > 0) {
                 String description = upper[0].getTypeName();
                 description = checkReplaceFromMap(map, description);
-                linkedListType = new LinkedListType(description, true);
+                linkedListType = new LinkedListType(description, true,false);
             }
         }
         return linkedListType;
@@ -39,7 +39,7 @@ public class GetTypes {
         String description = parameterizedType1
                 .getRawType().getTypeName();
         description = checkReplaceFromMap(map, description);
-        LinkedListType linkedListType = new LinkedListType(description, flag);
+        LinkedListType linkedListType = new LinkedListType(description, flag,false);
         getLinkedListType(wildcardType1, linkedListType, map);
         return linkedListType;
     }

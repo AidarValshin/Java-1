@@ -1,6 +1,6 @@
 package main.ru.mephi.java.Employee;
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
     private String name;
     private int salary;
 
@@ -32,5 +32,10 @@ public class Employee {
                 "name='" + name + '\'' +
                 ", salary=" + salary +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Employee employee) {
+       return Integer.compare(this.salary,employee.salary);
     }
 }

@@ -30,7 +30,7 @@ public class ClassDeclaration {
                     WildcardType wildcardType = (WildcardType) parameterizedType.getActualTypeArguments()[j];
                     arrayList.add(getLinkedListType(wildcardType, map));
                 } else {
-                    arrayList.add(new LinkedListType(typeName, true));
+                    arrayList.add(new LinkedListType(typeName, true,true));
                 }
             }
         }
@@ -72,7 +72,7 @@ public class ClassDeclaration {
                             System.out.println("upper: " + description);
                         }
                     } else {
-                        arrayList.add(new LinkedListType(typeName, true));
+                        arrayList.add(new LinkedListType(typeName, true,true));
                     }
                 }
             }
