@@ -21,15 +21,19 @@ public class GetTypes {
             linkedListType = setLinkedListNew(upper, true, map);
         } else {
             if (lower.length > 0) {
-                String description = lower[0].getTypeName();
-                description = checkReplaceFromMap(map, description);
-                linkedListType = new LinkedListType(description, false,false);
+                linkedListType = getLinkedListType(map, lower[0], false);
             } else if (upper.length > 0) {
-                String description = upper[0].getTypeName();
-                description = checkReplaceFromMap(map, description);
-                linkedListType = new LinkedListType(description, true,false);
+                linkedListType = getLinkedListType(map, upper[0], true);
             }
         }
+        return linkedListType;
+    }
+
+    private static LinkedListType getLinkedListType(Map<String, String> map, Type type, boolean b) {
+        LinkedListType linkedListType;
+        String description = type.getTypeName();
+        description = checkReplaceFromMap(map, description);
+        linkedListType = new LinkedListType(description, b, false);
         return linkedListType;
     }
 
@@ -39,7 +43,7 @@ public class GetTypes {
         String description = parameterizedType1
                 .getRawType().getTypeName();
         description = checkReplaceFromMap(map, description);
-        LinkedListType linkedListType = new LinkedListType(description, flag,false);
+        LinkedListType linkedListType = new LinkedListType(description, flag, false);
         getLinkedListType(wildcardType1, linkedListType, map);
         return linkedListType;
     }
@@ -68,16 +72,13 @@ public class GetTypes {
 
     private static void setLinkedListNext(LinkedListType linkedListType, Type[] types, boolean flag, Map<String, String> map) {
         ParameterizedType parameterizedType1 = (ParameterizedType) types[0];
-        String description = parameterizedType1.getRawType().getTypeName();
-        description = checkReplaceFromMap(map, description);
-        linkedListType.setNext(description, flag);
+        setLinkedListTypeTypes(linkedListType, map, parameterizedType1.getRawType(), flag);
         linkedListType = linkedListType.getNext();
         WildcardType wildcardType1 = (WildcardType) parameterizedType1.getActualTypeArguments()[0];
         getLinkedListType(wildcardType1, linkedListType, map);
     }
 
-    private static LinkedListType getLinkedListType(WildcardType wildcardType, LinkedListType linkedListType, Map<String, String> map) {
-        LinkedListType oldLinkedListType = linkedListType;
+    private static void getLinkedListType(WildcardType wildcardType, LinkedListType linkedListType, Map<String, String> map) {
         Type[] upper = wildcardType.getUpperBounds();
         Type[] lower = wildcardType.getLowerBounds();
         if (lower.length > 0 && lower[0] instanceof ParameterizedType) {
@@ -86,16 +87,17 @@ public class GetTypes {
             setLinkedListNext(linkedListType, upper, true, map);
         } else {
             if (lower.length > 0) {
-                String description = lower[0].getTypeName();
-                description = checkReplaceFromMap(map, description);
-                linkedListType.setNext(description, false);
+                setLinkedListTypeTypes(linkedListType, map, lower[0], false);
             } else if (upper.length > 0) {
-                String description = upper[0].getTypeName();
-                description = checkReplaceFromMap(map, description);
-                linkedListType.setNext(description, true);
+                setLinkedListTypeTypes(linkedListType, map, upper[0], true);
             }
         }
-        return oldLinkedListType;
+    }
+
+    private static void setLinkedListTypeTypes(LinkedListType linkedListType, Map<String, String> map, Type type, boolean b) {
+        String description = type.getTypeName();
+        description = checkReplaceFromMap(map, description);
+        linkedListType.setNext(description, b);
     }
 
     public static void main(String[] args) throws NoSuchFieldException, ClassNotFoundException {

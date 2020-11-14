@@ -12,6 +12,7 @@ import static main.ru.mephi.java.part6.injection.GetTypes.getLinkedListType;
 public class ClassDeclaration {
     /**
      * Get hierarchically types of parameters
+     *
      * @return ArrayList<LinkedListType>
      */
     public static ArrayList<LinkedListType> getDeclarationClass(Class clazz, String field) throws NoSuchFieldException {
@@ -30,13 +31,14 @@ public class ClassDeclaration {
                     WildcardType wildcardType = (WildcardType) parameterizedType.getActualTypeArguments()[j];
                     arrayList.add(getLinkedListType(wildcardType, map));
                 } else {
-                    arrayList.add(new LinkedListType(typeName, true,true));
+                    arrayList.add(new LinkedListType(typeName, true, true));
                 }
             }
         }
         return arrayList;
     }
-//the same as higher but with print
+
+    //the same as higher but with print
     public static void getDeclarationClasses(Class clazz) {
         Map<String, String> map = typeBounds(clazz);
         if (map != null) {
@@ -72,25 +74,25 @@ public class ClassDeclaration {
                             System.out.println("upper: " + description);
                         }
                     } else {
-                        arrayList.add(new LinkedListType(typeName, true,true));
+                        arrayList.add(new LinkedListType(typeName, true, true));
                     }
                 }
             }
             System.out.println("linked");
-            arrayList.forEach(p -> System.out.println(p));
+            arrayList.forEach(System.out::println);
         }
     }
 
     /**
-     * @return  null or type bound of generic type in JVM
+     * @return null or type bound of generic type in JVM
      */
-    private static Map<String, String> typeBounds( Class<?> cl) {
+    private static Map<String, String> typeBounds(Class<?> cl) {
         String description = null;
         Map<String, String> result = null;
         TypeVariable<?>[] vars = cl.getTypeParameters();
         if (vars.length != 0) {
             result = new HashMap<>(vars.length);
-            for (TypeVariable var : vars) {
+            for (TypeVariable<?> var : vars) {
                 Type[] bounds = var.getBounds();
                 if (bounds[0] instanceof ParameterizedType) {
                     ParameterizedType p = (ParameterizedType) bounds[0];

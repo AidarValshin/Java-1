@@ -28,6 +28,7 @@ public class LinkedListType {
         this.next = null;
         this.strict = false;
     }
+
     private LinkedListType(String type, boolean upLow, int level, boolean strict) {
         this.type = type;
         this.upLow = upLow;
@@ -35,13 +36,14 @@ public class LinkedListType {
         this.next = null;
         this.strict = strict;
     }
+
     public LinkedListType setNext(String type, boolean upLow) {
         this.next = new LinkedListType(type, upLow, this.level + 1);
         return this.next;
     }
 
     public static LinkedListType setInitalParent(String type) {
-        return new LinkedListType(type, true, -10,false);
+        return new LinkedListType(type, true, -10, false);
     }
 
     public String getType() {
