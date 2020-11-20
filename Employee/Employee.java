@@ -1,5 +1,8 @@
 package main.ru.mephi.java.Employee;
 
+import main.ru.mephi.java.part6.injection.TryInject;
+
+@TryInject
 public class Employee implements Comparable<Employee> {
     private String name;
     private int salary;

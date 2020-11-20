@@ -6,26 +6,45 @@ import main.ru.mephi.java.Employee.Manager;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static main.ru.mephi.java.part6.injection.ClassDeclaration.getDeclarationClass;
 
 public class Inject {
     /**
-     * Check inject "cls" to field "field" of Object o
+     * Check inject classes from "cls" to field "field" of Object o
+     * check only classes with annotation TryInject
      *
      * @return true if it inject is possible
      */
-    public static boolean check(Object o, String field, Class<?> cls) throws NoSuchFieldException {
+    public static List<Class<?>> check(Object o, String field, List<Class<?>> cls) throws NoSuchFieldException {
         ArrayList<LinkedListType> arrayList1 = getDeclarationClass(o.getClass(), field);
-        if ((cls.getGenericSuperclass() instanceof Class)) {
-            return checkClass(cls, arrayList1);
-        } else {
-            Boolean result = checkParameterizedType(cls, arrayList1);
-            if (result != null) return result;
+        List<Class<?>> result = new ArrayList<>();
+        for (Class<?> cl : cls) {
+            if (cl.isAnnotationPresent(TryInject.class)) {
+                if ((cl.getGenericSuperclass() instanceof Class)) {
+                    if (checkClass(cl, arrayList1)) {
+                        result.add(cl);
+                    }
+                } else {
+                    Boolean resultFlag = checkParameterizedType(cl, arrayList1);
+                    if (resultFlag == null) {
+                        result.add(cl);
+                    } else if (resultFlag) {
+                        result.add(cl);
+                    }
+                }
+            }
         }
-        return true;
+        return result;
     }
 
+    /**
+     * Check inject class  "cl" to field field produced by arrayLista
+     *
+     * @return true if it inject is possible
+     */
     private static Boolean checkParameterizedType(Class<?> cls, ArrayList<LinkedListType> arrayList1) {
         Class<?> fieldClass = null;
         ParameterizedType type = (ParameterizedType) cls.getGenericSuperclass();
@@ -60,6 +79,9 @@ public class Inject {
         return null;
     }
 
+    /**
+     * @return Class of field from arrayList1.get(i2)
+     */
     private static Class<?> getFieldClass(Class<?> fieldClass, ArrayList<LinkedListType> arrayList1, int i2) {
         try {
             fieldClass = Class.forName(arrayList1.get(i2).getType());
@@ -69,6 +91,9 @@ public class Inject {
         return fieldClass;
     }
 
+    /**
+     * @return assignable strict generic
+     */
     private static boolean checkStrict(ArrayList<LinkedListType> arrayList1, Class<?> fieldClass, Class<?> parameter, int i) {
         if (arrayList1.get(i + 1).isUpLow())// Upper
         {
@@ -78,6 +103,11 @@ public class Inject {
         }
     }
 
+    /**
+     * Check assignable from cls to fieldClass
+     *
+     * @return true if it inject is possible
+     */
     private static boolean checkClass(Class<?> cls, ArrayList<LinkedListType> arrayList1) {
         Class<?> fieldClass = getFieldClass(arrayList1.get(0));
         assert fieldClass != null;
@@ -216,24 +246,28 @@ public class Inject {
     public static void main(String[] args) throws NoSuchFieldException {
         TestClass1 testClass1 = new TestClass1();
         System.out.println("---pair");
-        System.out.println("true = " + check(testClass1, "pair", MyPair1.class));//true
-        System.out.println("false = " + check(testClass1, "pair", MyPair2.class));//false
+        List<Class<?>> classes1 = Arrays.asList(MyPair1.class, MyPair2.class);
+        check(testClass1, "pair", classes1).forEach(System.out::println);//MyPair1
+        System.out.println("assert : MyPair1");
+
         System.out.println("---employees");
-        System.out.println("true = " + check(testClass1, "employees", MyList1.class));//true
-        System.out.println("false = " + check(testClass1, "employees", MyList2.class));//false
-        System.out.println("true = " + check(testClass1, "employees", MyList5.class));//true
+        List<Class<?>> classes2 = Arrays.asList(MyList1.class, MyList2.class, MyList5.class);
+        check(testClass1, "employees", classes2).forEach(System.out::println);//MyList1,MyList5
+        System.out.println("assert : MyList1,MyList5");
+
         System.out.println("---list2");
-        System.out.println("true = " + check(testClass1, "list2", MyList3.class));//true
-        System.out.println("false = " + check(testClass1, "list2", MyList4.class));//false
-        System.out.println("false = " + check(testClass1, "list2", MyList2.class));//false
+        List<Class<?>> classes3 = Arrays.asList(MyList3.class, MyList2.class, MyList4.class);
+        check(testClass1, "list2", classes3).forEach(System.out::println);//MyList1,MyList5
+        System.out.println("assert : MyList3.class");
+
         System.out.println("---list");
-        System.out.println("true = " + check(testClass1, "list", MyList3.class));//true
-        System.out.println("true = " + check(testClass1, "list", MyList4.class));//true
-        System.out.println("false = " + check(testClass1, "list", MyList2.class));//false
+        List<Class<?>> classes4 = Arrays.asList(MyList3.class, MyList2.class, MyList4.class);
+        check(testClass1, "list", classes4).forEach(System.out::println);
+        System.out.println("assert : MyList3.class,MyList4.class");
+
         System.out.println("---employee");
-        System.out.println("true = " + check(testClass1, "employee", Manager.class));//true
-        System.out.println("true = " + check(testClass1, "employee", Employee.class));//true
-        System.out.println("false = " + check(testClass1, "employee", Double.class));//false
-        System.out.println("false = " + check(testClass1, "employee", Object.class));//false
+        List<Class<?>> classes5 = Arrays.asList(Manager.class, Employee.class, Double.class, Object.class);
+        check(testClass1, "employee", classes5).forEach(System.out::println);
+        System.out.println("assert :Manager.class,Employee.class");
     }
 }
