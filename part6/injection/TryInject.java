@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.TYPE) // only for
+@Target(ElementType.TYPE) // only for classes
 @Retention(RetentionPolicy.RUNTIME) // use in runtime
 public @interface TryInject {
 }
