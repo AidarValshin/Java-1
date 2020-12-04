@@ -3,7 +3,6 @@ package main.ru.mephi.java.part6.injection;
 import main.ru.mephi.java.Employee.Employee;
 import main.ru.mephi.java.part6.Additionally.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TestClass1 {
