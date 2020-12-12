@@ -1,9 +1,6 @@
 package main.ru.mephi.java.part7.task5;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.RandomAccess;
+import java.util.*;
 
 public class SwapInList {
     public static void swap(List<?> list, int i, int j) {
@@ -36,10 +33,32 @@ public class SwapInList {
         }
         E second = listIterator.next();
         listIterator.set(first);
-        for (int count = j; count > i; count--) {
+        if (j - i < i) {
+            for (int count = j; count > i; count--) {
+                listIterator.previous();
+            }
             listIterator.previous();
+            listIterator.set(second);
         }
-        listIterator.set(second);
+        else{
+            ListIterator<E> listIterator2 = list.listIterator(i);
+            listIterator2.next();
+            listIterator2.set(second);
+        }
     }
 
+    public static void main(String[] args) {
+        List<Integer> list = new LinkedList<>();
+        for(int i=0;i<10;i++){
+            list.add(i);
+        }
+        swap(list,0,9);
+        list.forEach(System.out::println);
+        System.out.println();
+        swap(list,5,6);
+        list.forEach(System.out::println);
+        System.out.println();
+        swap(list,7,9);
+        list.forEach(System.out::println);
+    }
 }
