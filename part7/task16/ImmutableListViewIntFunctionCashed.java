@@ -1,19 +1,21 @@
 package main.ru.mephi.java.part7.task16;
 
+import main.ru.mephi.java.part7.task13.Cache;
+
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.IntFunction;
 
 public class ImmutableListViewIntFunctionCashed {
-    public static ImmutableListView getImmutableListView(int i, IntFunction<Integer> intFunction) {
-        return new ImmutableListView(i, intFunction);
+    public static <T> ImmutableListView<T> getImmutableListView(int i, IntFunction<T> intFunction) {
+        return new ImmutableListView<T>(i, intFunction);
     }
 
-    private static class ImmutableListView implements List<Integer> {
+    private static class ImmutableListView<T> implements List<T> {
         private final int size;
         private final int lowBound;
-        private final IntFunction<Integer> intFunction;
-        private Map<Integer,Integer> cash=new LinkedHashMap<>();
+        private final IntFunction<T> intFunction;
+        private Map<Integer,Integer> cash=new Cache<>(100);
 
         private int getAppliedOrSetCash(int index){
             if(cash.containsKey(index)){
@@ -22,7 +24,9 @@ public class ImmutableListViewIntFunctionCashed {
             }
             else {
                 int result = intFunction.apply(index);
-               if(cash.size()<100){
+                cash.put(index,result);
+                System.out.println("put or replace");
+           /*    if(cash.size()<100){
                    cash.put(index,result);
                    System.out.println("put");
                }
@@ -33,6 +37,7 @@ public class ImmutableListViewIntFunctionCashed {
                    cash.put(index,result);
                    System.out.println("replace");
                }
+            */
                return result;
             }
         }
@@ -143,7 +148,7 @@ public class ImmutableListViewIntFunctionCashed {
                     return false;
                 }
             }
-            return collection.size() > 0;
+            return true;
         }
 
         @Override

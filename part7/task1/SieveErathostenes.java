@@ -30,9 +30,11 @@ public class SieveErathostenes {
     }
 
     public static void main(String[] args) {
-        getHashSet(100).forEach(p->System.out.print(p+" "));
-        System.out.println();
-        getBitSet(100).stream().forEach(p->System.out.print(p+" "));
+        //getHashSet(100).forEach(p->System.out.print(p+" "));
+       // System.out.println();
+      //  getBitSet(100000).stream().forEach(p->System.out.print(p+" "));
+        //System.out.println( getHashSet(100000).size());
+        System.out.println(getBitSet(1000000).cardinality());
     }
 }
 

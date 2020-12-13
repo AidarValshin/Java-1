@@ -8,7 +8,7 @@ public class SwapInList {
             throw new IllegalArgumentException("out of range");
         }
         if (i == j) {
-            throw new IllegalArgumentException("i==j. Nothing to change");
+            return ;
         }
         if (list instanceof RandomAccess) {
             Collections.swap(list, i, j);
@@ -26,24 +26,22 @@ public class SwapInList {
     }
 
     private static <E> void sequentialAccessSwapHelper(List<E> list, int i, int j) {
-        ListIterator<E> listIterator = list.listIterator(i);
+        ListIterator<E> listIterator = list.listIterator(i);// i / n-i
         E first = listIterator.next();
-        for (int count = i + 1; count < j; count++) {
+        for (int count = i + 1; count < j; count++) { // j-i / n-j
             listIterator.next();
         }
         E second = listIterator.next();
         listIterator.set(first);
-        if (j - i < i) {
+        if (j - i < i) { // j-i
             for (int count = j; count > i; count--) {
                 listIterator.previous();
             }
             listIterator.previous();
             listIterator.set(second);
         }
-        else{
-            ListIterator<E> listIterator2 = list.listIterator(i);
-            listIterator2.next();
-            listIterator2.set(second);
+        else{  // i
+            list.set(i,second);
         }
     }
 
