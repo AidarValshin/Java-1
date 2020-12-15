@@ -12,57 +12,46 @@ public class ImmutableListViewIntFunctionCashed {
     }
 
     private static class ImmutableListView<T> implements List<T> {
-        private final int size;
-        private final int lowBound;
-        private final IntFunction<T> intFunction;
-        private Map<Integer,Integer> cash=new Cache<>(100);
+        private final int upperBound;
+        private final int shift;
+        private IntFunction<T> intFunction;
+        private Map<Integer, T> cash = new Cache<>(100);
 
-        private int getAppliedOrSetCash(int index){
-            if(cash.containsKey(index)){
+        private T getAppliedOrSetCash(int index) {
+            if (cash.containsKey(index)) {
                 System.out.println("get");
                 return cash.get(index);
-            }
-            else {
-                int result = intFunction.apply(index);
-                cash.put(index,result);
+            } else {
+                T result = intFunction.apply(index);
+                cash.put(index, result);
                 System.out.println("put or replace");
-           /*    if(cash.size()<100){
-                   cash.put(index,result);
-                   System.out.println("put");
-               }
-               else{
-                   Iterator iterator=cash.entrySet().iterator();
-                   iterator.next();
-                   iterator.remove();
-                   cash.put(index,result);
-                   System.out.println("replace");
-               }
-            */
-               return result;
+
+                return result;
             }
-        }
-        public ImmutableListView(int size, IntFunction<Integer> intFunction) {
-            this.intFunction = intFunction;
-            if (size < 0) {
-                throw new IllegalArgumentException(size + "<0");
-            }
-            this.size = size;
-            this.lowBound = 0;
         }
 
-        public ImmutableListView(int lowBound, int size, IntFunction<Integer> intFunction) {
+        public ImmutableListView(int upperBound, IntFunction<T> intFunction) {
             this.intFunction = intFunction;
-            if (size < lowBound || size < 0 || lowBound < 0) {
+            if (upperBound < 0) {
+                throw new IllegalArgumentException(upperBound + "<0");
+            }
+            this.upperBound = upperBound;
+            this.shift = 0;
+        }
+
+        public ImmutableListView(int shift, int upperBound, IntFunction<T> intFunction) {
+            this.intFunction = intFunction;
+            if (upperBound < shift || upperBound < 0 || shift < 0) {
                 throw new IllegalArgumentException();
             }
-            this.size = size;
-            this.lowBound = lowBound;
+            this.upperBound = upperBound;
+            this.shift = shift;
         }
 
 
         @Override
         public int size() {
-            return size + 1;
+            return upperBound + 1 - shift;
         }
 
         @Override
@@ -72,41 +61,30 @@ public class ImmutableListViewIntFunctionCashed {
 
         @Override
         public boolean contains(Object o) {
-            if (o instanceof Integer) {
-                for (int i = lowBound; i <= size; i++) {
-                    if ( getAppliedOrSetCash(i) == (int) o) {
-                        return true;
-                    }
+            for (int i = shift; i <= upperBound; i++) {
+                if (getAppliedOrSetCash(i) == (T) o) {
+                    return true;
                 }
             }
+
             return false;
         }
 
         @Override
-        public Iterator<Integer> iterator() {
-            return new Iterator<>() {
-                private int current = lowBound - 1;
-
-                @Override
-                public boolean hasNext() {
-                    return this.current < size;
-                }
-
-                @Override
-                public Integer next() {
-                    if (this.current > size) {
-                        throw new IndexOutOfBoundsException("out of bound");
-                    }
-                    return  getAppliedOrSetCash(++this.current);
-                }
-            };
+        public Iterator<T> iterator() {
+            return listIterator();
         }
 
         @Override
         public Object[] toArray() {
-            Integer[] array = new Integer[size];
-            for (int i = this.lowBound; i <= size; i++) {
-                array[i] =  getAppliedOrSetCash(i);
+
+            @SuppressWarnings("unchecked")
+            T[] array = (T[]) Array.newInstance(
+                    intFunction.apply(0).getClass(),
+                    upperBound - shift + 1);
+            int j = 0;
+            for (int i = this.shift; i <= upperBound; i++) {
+                array[j++] = getAppliedOrSetCash(i);
             }
             return array;
         }
@@ -114,25 +92,26 @@ public class ImmutableListViewIntFunctionCashed {
         @Override
         public <T> T[] toArray(T[] ts) {
             Object[] array = null;
-            if (ts.length > this.size) {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), size);
-                for (int i = this.lowBound; i <= size; i++) {
-                    array[i] =  getAppliedOrSetCash(i);
+            int j = 0;
+            if (ts.length > this.upperBound) {
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound - shift + 1);
+                for (int i = this.shift; i <= upperBound; i++) {
+                    array[j++] = getAppliedOrSetCash(i);
                 }
             } else {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), ts.length);
-                for (int i = this.lowBound; i < ts.length; i++) {
-                    array[i] =  getAppliedOrSetCash(i);
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound - shift + 1);
+                for (int i = this.shift; i < ts.length + this.shift; i++) {
+                    array[j++] = getAppliedOrSetCash(i);
                 }
-                for (int i = ts.length + 1; i <= size; i++) {
-                    array[i] = null;
+                for (int i = ts.length + this.shift; i <= upperBound; i++) {
+                    array[j++] = null;
                 }
             }
             return (T[]) array;
         }
 
         @Override
-        public boolean add(Integer integer) {
+        public boolean add(T t) {
             throw new UnsupportedOperationException("Cant change view");
         }
 
@@ -152,14 +131,15 @@ public class ImmutableListViewIntFunctionCashed {
         }
 
         @Override
-        public boolean addAll(Collection<? extends Integer> collection) {
+        public boolean addAll(Collection<? extends T> collection) {
             throw new UnsupportedOperationException("Cant change view");
         }
 
         @Override
-        public boolean addAll(int i, Collection<? extends Integer> collection) {
+        public boolean addAll(int i, Collection<? extends T> collection) {
             throw new UnsupportedOperationException("Cant change view");
         }
+
 
         @Override
         public boolean removeAll(Collection<?> collection) {
@@ -177,127 +157,80 @@ public class ImmutableListViewIntFunctionCashed {
         }
 
         @Override
-        public Integer get(int i) {
-            return  getAppliedOrSetCash(i);
+        public T get(int i) {
+            if (i + shift <= upperBound) {
+                return getAppliedOrSetCash(i + shift);
+            }
+            throw new IndexOutOfBoundsException(" your index is: " + i + ", bound is: " + (upperBound - shift));
         }
 
+
         @Override
-        public Integer set(int i, Integer integer) {
+        public T set(int i, T t) {
             throw new UnsupportedOperationException("Cant change view");
         }
 
         @Override
-        public void add(int i, Integer integer) {
+        public void add(int i, T t) {
             throw new UnsupportedOperationException("Cant change view");
         }
 
         @Override
-        public Integer remove(int i) {
+        public T remove(int i) {
             throw new UnsupportedOperationException("Cant change view");
         }
+
 
         @Override
         public int indexOf(Object o) {
-            if (o instanceof Integer) {
-                int oo = (int) o;
-                for (int i = lowBound; i <= size; i++) {
-                    if ( getAppliedOrSetCash(i) == oo) {
-                        return i;
-                    }
+            T oo = (T) o;
+            for (int i = shift; i <= upperBound; i++) {
+                if (getAppliedOrSetCash(i) == oo) {
+                    return i - shift;
                 }
             }
+
             return -1;
         }
 
         @Override
         public int lastIndexOf(Object o) {
             int index = -1;
-            if (o instanceof Integer) {
-                int oo = (int) o;
-                for (int i = lowBound; i <= size; i++) {
-                    if ( getAppliedOrSetCash(i) == oo) {
-                        index = i;
-                    }
+            T oo = (T) o;
+            for (int i = shift; i <= upperBound; i++) {
+                if (getAppliedOrSetCash(i) == oo) {
+                    index = i;
                 }
             }
             return index;
         }
 
         @Override
-        public ListIterator<Integer> listIterator() {
-            return new ListIterator<Integer>() {
-                private int current = lowBound - 1;
-
-                @Override
-                public boolean hasNext() {
-                    return this.current < size;
-                }
-
-                @Override
-                public Integer next() {
-                    if (this.current > size) {
-                        throw new IndexOutOfBoundsException("out of bound");
-                    }
-                    return  getAppliedOrSetCash(++this.current);
-                }
-
-                @Override
-                public boolean hasPrevious() {
-                    return current > lowBound;
-                }
-
-                @Override
-                public Integer previous() {
-                    return  getAppliedOrSetCash(--current);
-                }
-
-                @Override
-                public int nextIndex() {
-                    return this.current + 1;
-                }
-
-                @Override
-                public int previousIndex() {
-                    return this.current - 1;
-                }
-
-                @Override
-                public void remove() {
-                    throw new UnsupportedOperationException("Cant change view");
-                }
-
-                @Override
-                public void set(Integer integer) {
-                    throw new UnsupportedOperationException("Cant change view");
-                }
-
-                @Override
-                public void add(Integer integer) {
-                    throw new UnsupportedOperationException("Cant change view");
-                }
-            };
+        public ListIterator<T> listIterator() {
+            return listIterator(shift - 1);
         }
 
         @Override
-        public ListIterator<Integer> listIterator(int i) {
-            if (i < lowBound || i > this.size) {
+        public ListIterator<T> listIterator(int i) {
+            if (i < shift - 1 || i > this.upperBound) {
                 throw new IndexOutOfBoundsException("index = " + i);
             }
-            return new ListIterator<Integer>() {
+            return new ListIterator<T>() {
                 private int current = i;
 
                 @Override
                 public boolean hasNext() {
-                    return this.current <= size;
+                    return this.current <= upperBound;
                 }
 
                 @Override
-                public Integer next() {
-                    if (this.current > size) {
-                        throw new IndexOutOfBoundsException("out of bound");
+                public T next() {
+                    if (hasNext()) {
+                        return getAppliedOrSetCash(++this.current);
                     }
-                    return  getAppliedOrSetCash(++this.current);
+                    throw new IndexOutOfBoundsException("out of bound");
                 }
+
 
                 @Override
                 public boolean hasPrevious() {
@@ -305,8 +238,12 @@ public class ImmutableListViewIntFunctionCashed {
                 }
 
                 @Override
-                public Integer previous() {
-                    return  getAppliedOrSetCash(--current);
+                public T previous() {
+                    if(hasPrevious()) {
+                        return getAppliedOrSetCash(--current);
+                    }
+                    throw new IndexOutOfBoundsException("out of bound");
+
                 }
 
                 @Override
@@ -325,41 +262,45 @@ public class ImmutableListViewIntFunctionCashed {
                 }
 
                 @Override
-                public void set(Integer integer) {
+                public void set(T t) {
                     throw new UnsupportedOperationException("Cant change view");
                 }
 
                 @Override
-                public void add(Integer integer) {
+                public void add(T t) {
                     throw new UnsupportedOperationException("Cant change view");
                 }
             };
         }
 
         @Override
-        public List<Integer> subList(int from, int to) {
-            if (from > to
-                    || to > size
-                    || from < lowBound) {
-                throw new IllegalArgumentException();
+        public List<T> subList(int from, int to) {
+            if (from >to
+                    || to > upperBound-shift+1
+                    || from < 0 ) {
+                throw new IllegalArgumentException("wrong bounds from: "+from+" to: "+ to);
             }
-            return new ImmutableListView(from, to, intFunction);
+            return new ImmutableListView<>(this.shift+from, to+shift-1, intFunction);
         }
+
     }
 
     public static void main(String[] args) {
-        ImmutableListViewIntFunctionCashed.ImmutableListView immutableListView
-                = ImmutableListViewIntFunctionCashed.getImmutableListView(98, p -> p+2);
+        ImmutableListViewIntFunctionCashed.ImmutableListView<String> immutableListView
+                = ImmutableListViewIntFunctionCashed.getImmutableListView(98, p -> Integer.toString(p + 2));
         immutableListView.forEach(System.out::println);
         System.out.println("---------------------------------------------------------");
-       Iterator<Integer> listIterator = immutableListView.listIterator(98);
-        Iterator<Integer> iterator = immutableListView.iterator();
-        for(int i=0;i<98;i++){
+        Iterator<String> listIterator = immutableListView.listIterator(98);
+        Iterator<String> iterator = immutableListView.iterator();
+        for (int i = 0; i < 98; i++) {
             System.out.println(iterator.next());
         }
         //System.out.println(immutableListView.contains(-5));
         //System.out.println(immutableListView.contains(-11));
-        immutableListView.add(3);
+        System.out.println(Arrays.toString(immutableListView.subList(10, 51).toArray()));
+        immutableListView.add("3");
 
     }
 }
+
+

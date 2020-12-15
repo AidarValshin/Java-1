@@ -1,10 +1,7 @@
 package main.ru.mephi.java.part7.task14;
 
 import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 
 public class ImmutableListView2 { //Todo удалить лишний код,использовать лист итератор вместо
@@ -14,28 +11,28 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
 
     private static class ImmutableListView implements List<Integer> {
         private final int upperBound;
-        private final int lowBound;
+        private final int shift;
 
         public ImmutableListView(int upperBound) {
             if (upperBound < 0) {
                 throw new IllegalArgumentException(upperBound + "<0");
             }
             this.upperBound = upperBound;
-            this.lowBound = 0;
+            this.shift = 0;
         }
 
-        public ImmutableListView(int lowBound, int upperBound) {
-            if (upperBound < lowBound || upperBound < 0 || lowBound < 0) {
+        public ImmutableListView(int shift, int upperBound) {
+            if (upperBound < shift || upperBound < 0 || shift < 0) {
                 throw new IllegalArgumentException();
             }
             this.upperBound = upperBound;
-            this.lowBound = lowBound;
+            this.shift = shift;
         }
 
 
         @Override
         public int size() {
-            return upperBound + 1;
+            return upperBound + 1-shift;
         }
 
         @Override
@@ -46,36 +43,22 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
         @Override
         public boolean contains(Object o) {
             if (o instanceof Integer) {
-                return (int) o <= upperBound ; //TODO lowerBound
+                return (int) o <= upperBound && (int) o >=shift ;
             }
             return false;
         }
 
         @Override
         public Iterator<Integer> iterator() {
-            return new Iterator<>() {
-                private int current = lowBound-1;
-
-                @Override
-                public boolean hasNext() {
-                    return this.current < upperBound;
-                }
-
-                @Override
-                public Integer next() {
-                    if (this.current > upperBound) {
-                        throw new IndexOutOfBoundsException("out of bounds");
-                    }
-                    return ++this.current;
-                }
-            };
+            return listIterator();
         }
 
         @Override
         public Object[] toArray() {
-            Integer[] array = new Integer[upperBound-lowBound+1];
-            for (int i = this.lowBound; i <= upperBound; i++) {
-                array[i] = i;
+            Integer[] array = new Integer[upperBound-shift+1];
+            int j=0;
+            for (int i = this.shift; i <= upperBound; i++) {
+                array[j++] = i;
             }
             return array;
         }
@@ -83,18 +66,19 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
         @Override
         public <T> T[] toArray(T[] ts) {
             Object[] array = null;
-            if (ts.length > this.upperBound) {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound-lowBound+1);
-                for (int i = this.lowBound; i <= upperBound; i++) {
-                    array[i] = i;
+            int j=0;
+            if (ts.length > this.upperBound-shift+1) {
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound-shift+1);
+                for (int i = this.shift; i <= upperBound; i++) {
+                    array[j++] = i;
                 }
             } else {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), ts.length);
-                for (int i = this.lowBound; i < ts.length; i++) {
-                    array[i] = i;
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound-shift+1);
+                for (int i = this.shift; i < ts.length+this.shift; i++) {
+                    array[j++] = i;
                 }
-                for (int i = ts.length + 1; i <= upperBound; i++) {
-                    array[i] = null;
+                for (int i = ts.length + this.shift; i <= upperBound; i++) {
+                    array[j++] = null;
                 }
             }
             return (T[]) array;
@@ -102,7 +86,6 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
 
         @Override
         public boolean add(Integer integer) {
-
             throw new UnsupportedOperationException("Cant change view");
         }
 
@@ -147,8 +130,11 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
         }
 
         @Override
-        public Integer get(int i) { //TODO upper,lower bound. если у меня view начиная с 3, то валидные 0,1,2
-            return i;
+        public Integer get(int i) {
+            if(i+shift<=upperBound) {
+                return i + shift;
+            }
+            throw new IndexOutOfBoundsException(" your index is: "+i+", bound is: "+(upperBound-shift));
         }
 
         @Override
@@ -158,7 +144,6 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
 
         @Override
         public void add(int i, Integer integer) {
-
             throw new UnsupportedOperationException("Cant change view");
         }
 
@@ -168,11 +153,11 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
         }
 
         @Override
-        public int indexOf(Object o) { // TODO lower bound, смещение для sublist
+        public int indexOf(Object o) {
             if (o instanceof Integer) {
                 int oo = (int) o;
-                if (oo <= upperBound) {
-                    return oo;
+                if (oo <= upperBound && oo>=shift) {
+                    return oo - shift;
                 }
             }
             return -1;
@@ -185,8 +170,16 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
 
         @Override
         public ListIterator<Integer> listIterator() {
+            return listIterator(shift - 1);
+        }
+
+        @Override
+        public ListIterator<Integer> listIterator(int i) {
+            if (i < shift-1 || i > this.upperBound) {
+                throw new IndexOutOfBoundsException("index = " + i);
+            }
             return new ListIterator<Integer>() {
-                private int current = lowBound-1;
+                private int current = i;
 
                 @Override
                 public boolean hasNext() {
@@ -195,68 +188,10 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
 
                 @Override
                 public Integer next() {
-                    if (this.current > upperBound) {
-                        throw new IndexOutOfBoundsException("out of bound");
+                    if(hasNext()) {
+                        return ++this.current;
                     }
-                    return ++this.current;
-                }
-
-                @Override
-                public boolean hasPrevious() {
-                    return current > lowBound;
-                }
-
-                @Override
-                public Integer previous() {
-                    return --current;
-                }
-
-                @Override
-                public int nextIndex() {
-                    return this.current + 1;
-                }
-
-                @Override
-                public int previousIndex() {
-                    return this.current - 1;
-                }
-
-                @Override
-                public void remove() {
-                    throw new UnsupportedOperationException("Cant change view");
-                }
-
-                @Override
-                public void set(Integer integer) {
-                    throw new UnsupportedOperationException("Cant change view");
-                }
-
-                @Override
-                public void add(Integer integer) {
-                    throw new UnsupportedOperationException("Cant change view");
-                }
-            };
-        }
-
-        @Override
-        public ListIterator<Integer> listIterator(int i) {
-            if (i < lowBound || i > this.upperBound) {
-                throw new IndexOutOfBoundsException("index = " + i);
-            }
-            return new ListIterator<Integer>() {
-                private int current = i;
-
-                @Override
-                public boolean hasNext() {
-                    return this.current <= upperBound;
-                }
-
-                @Override
-                public Integer next() {
-                    if (this.current > upperBound) {
                         throw new IndexOutOfBoundsException("out of bound");
-                    }
-                    return ++this.current;
                 }
 
                 @Override
@@ -266,7 +201,10 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
 
                 @Override
                 public Integer previous() {
-                    return --current;
+                    if(hasPrevious()) {
+                        return --current;
+                    }
+                    throw new IndexOutOfBoundsException("out of bound");
                 }
 
                 @Override
@@ -299,18 +237,26 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
         @Override
         public List<Integer> subList(int from, int to) {
             if (from >to
-                    || to > upperBound-lowBound+1
+                    || to > upperBound-shift+1
                     || from < 0 ) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("wrong bounds from: "+from+" to: "+ to);
             }
-            return new ImmutableListView(from, to);
+            return new ImmutableListView(this.shift+from, to+shift-1);
         }
     }
 
     public static void main(String[] args) {
         ImmutableListView immutableListView = ImmutableListView2.getImmutableListView(10);
         immutableListView.forEach(System.out::println);
-        immutableListView.subList(2,10).forEach(System.out::println);
+        System.out.println();
+        immutableListView.subList(2,11).forEach(System.out::println);
+        System.out.println();
+        System.out.println(immutableListView.subList(5,11).get(5));
+        System.out.println();
+        System.out.println(immutableListView.subList(5,11).subList(2,6).get(3));
+        System.out.println(Arrays.toString(immutableListView.subList(5, 11).toArray()));
+        System.out.println();
+        System.out.println(immutableListView.subList(5,11).get(11));
         immutableListView.add(3);
     }
 
