@@ -158,7 +158,7 @@ public class ImmutableListViewIntFunctionCashed {
 
         @Override
         public T get(int i) {
-            if (i + shift <= upperBound) {
+            if (i + shift <= upperBound && i >= 0) {
                 return getAppliedOrSetCash(i + shift);
             }
             throw new IndexOutOfBoundsException(" your index is: " + i + ", bound is: " + (upperBound - shift));
@@ -199,7 +199,7 @@ public class ImmutableListViewIntFunctionCashed {
             T oo = (T) o;
             for (int i = shift; i <= upperBound; i++) {
                 if (getAppliedOrSetCash(i) == oo) {
-                    index = i;
+                    index = i-shift;
                 }
             }
             return index;
@@ -239,7 +239,7 @@ public class ImmutableListViewIntFunctionCashed {
 
                 @Override
                 public T previous() {
-                    if(hasPrevious()) {
+                    if (hasPrevious()) {
                         return getAppliedOrSetCash(--current);
                     }
                     throw new IndexOutOfBoundsException("out of bound");
@@ -275,12 +275,12 @@ public class ImmutableListViewIntFunctionCashed {
 
         @Override
         public List<T> subList(int from, int to) {
-            if (from >to
-                    || to > upperBound-shift+1
-                    || from < 0 ) {
-                throw new IllegalArgumentException("wrong bounds from: "+from+" to: "+ to);
+            if (from > to
+                    || to > upperBound - shift + 1
+                    || from < 0) {
+                throw new IllegalArgumentException("wrong bounds from: " + from + " to: " + to);
             }
-            return new ImmutableListView<>(this.shift+from, to+shift-1, intFunction);
+            return new ImmutableListView<>(this.shift + from, to + shift - 1, intFunction);
         }
 
     }

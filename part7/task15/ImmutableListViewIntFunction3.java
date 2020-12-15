@@ -143,7 +143,7 @@ public class ImmutableListViewIntFunction3 {
 
         @Override
         public Integer get(int i) {
-            if(i+shift<=upperBound) {
+            if(i+shift<=upperBound && i>=0) {
                 return intFunction.apply(i + shift);
             }
             throw new IndexOutOfBoundsException(" your index is: "+i+", bound is: "+(upperBound-shift));

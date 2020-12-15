@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 
-public class ImmutableListView2 { //Todo удалить лишний код,использовать лист итератор вместо
+public class ImmutableListView2 {
     public static ImmutableListView getImmutableListView(int i) {
         return new ImmutableListView(i);
     }
@@ -131,7 +131,7 @@ public class ImmutableListView2 { //Todo удалить лишний код,использовать лист ит
 
         @Override
         public Integer get(int i) {
-            if(i+shift<=upperBound) {
+            if(i+shift<=upperBound && i>=0) {
                 return i + shift;
             }
             throw new IndexOutOfBoundsException(" your index is: "+i+", bound is: "+(upperBound-shift));
