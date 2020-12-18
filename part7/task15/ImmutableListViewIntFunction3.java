@@ -43,7 +43,7 @@ public class ImmutableListViewIntFunction3 {
 
         @Override
         public boolean isEmpty() {
-            return false;
+            return upperBound + 1 - shift>0;
         }
 
         @Override

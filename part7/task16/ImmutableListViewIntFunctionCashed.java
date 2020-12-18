@@ -56,13 +56,13 @@ public class ImmutableListViewIntFunctionCashed {
 
         @Override
         public boolean isEmpty() {
-            return false;
+            return upperBound + 1 - shift>0;
         }
 
         @Override
         public boolean contains(Object o) {
             for (int i = shift; i <= upperBound; i++) {
-                if (getAppliedOrSetCash(i) == (T) o) {
+                if (getAppliedOrSetCash(i).equals(o)) {
                     return true;
                 }
             }
@@ -183,9 +183,8 @@ public class ImmutableListViewIntFunctionCashed {
 
         @Override
         public int indexOf(Object o) {
-            T oo = (T) o;
             for (int i = shift; i <= upperBound; i++) {
-                if (getAppliedOrSetCash(i) == oo) {
+                if (getAppliedOrSetCash(i).equals(o)) {
                     return i - shift;
                 }
             }
@@ -196,9 +195,8 @@ public class ImmutableListViewIntFunctionCashed {
         @Override
         public int lastIndexOf(Object o) {
             int index = -1;
-            T oo = (T) o;
             for (int i = shift; i <= upperBound; i++) {
-                if (getAppliedOrSetCash(i) == oo) {
+                if (getAppliedOrSetCash(i).equals(o)) {
                     index = i-shift;
                 }
             }
@@ -290,7 +288,7 @@ public class ImmutableListViewIntFunctionCashed {
                 = ImmutableListViewIntFunctionCashed.getImmutableListView(98, p -> Integer.toString(p + 2));
         immutableListView.forEach(System.out::println);
         System.out.println("---------------------------------------------------------");
-        Iterator<String> listIterator = immutableListView.listIterator(98);
+
         Iterator<String> iterator = immutableListView.iterator();
         for (int i = 0; i < 98; i++) {
             System.out.println(iterator.next());
