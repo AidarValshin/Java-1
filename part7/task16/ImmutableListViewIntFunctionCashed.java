@@ -218,7 +218,7 @@ public class ImmutableListViewIntFunctionCashed {
 
                 @Override
                 public boolean hasNext() {
-                    return this.current <= upperBound;
+                    return this.current < upperBound;
                 }
 
                 @Override
