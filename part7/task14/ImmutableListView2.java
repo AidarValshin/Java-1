@@ -196,7 +196,7 @@ public class ImmutableListView2 {
 
                 @Override
                 public boolean hasPrevious() {
-                    return current > shift - 1 + i;
+                    return current > shift;
                 }
 
                 @Override
@@ -256,10 +256,16 @@ public class ImmutableListView2 {
         System.out.println(immutableListView.subList(5,11).subList(2,6).get(3));
         System.out.println(Arrays.toString(immutableListView.subList(5, 11).toArray()));
         System.out.println();
-       ListIterator<Integer> listIterator= immutableListView.subList(5,11).listIterator(5);
+       ListIterator<Integer> listIterator= immutableListView.subList(5,7).listIterator(1);
         System.out.println("next index " +listIterator.nextIndex());
+        System.out.println("previous index "+listIterator.previousIndex());
         System.out.println(listIterator.next());
         System.out.println("next index " +listIterator.nextIndex());
+        System.out.println("previous index "+listIterator.previousIndex());
+        System.out.println(listIterator.previous());
+        System.out.println("next index " +listIterator.nextIndex());
+        System.out.println("previous index "+listIterator.previousIndex());
+        System.out.println(listIterator.previous());
         System.out.println();
         System.out.println(immutableListView.subList(5,11).get(11));
         immutableListView.add(3);

@@ -219,7 +219,7 @@ public class ImmutableListViewIntFunction3 {
 
                 @Override
                 public boolean hasPrevious() {
-                    return current > i;
+                    return current > shift;
                 }
 
                 @Override
