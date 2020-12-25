@@ -56,7 +56,7 @@ public class ImmutableListViewIntFunctionCashed {
 
         @Override
         public boolean isEmpty() {
-            return upperBound + 1 - shift>0;
+            return upperBound + 1 - shift > 0;
         }
 
         @Override
@@ -93,8 +93,8 @@ public class ImmutableListViewIntFunctionCashed {
         public <T> T[] toArray(T[] ts) {
             Object[] array = null;
             int j = 0;
-            if (ts.length < this.upperBound-shift+1) {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound-shift+1);
+            if (ts.length < this.upperBound - shift + 1) {
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound - shift + 1);
                 for (int i = this.shift; i <= upperBound; i++) {
                     array[j++] = getAppliedOrSetCash(i);
                 }
@@ -197,7 +197,7 @@ public class ImmutableListViewIntFunctionCashed {
             int index = -1;
             for (int i = shift; i <= upperBound; i++) {
                 if (getAppliedOrSetCash(i).equals(o)) {
-                    index = i-shift;
+                    index = i - shift;
                 }
             }
             return index;
@@ -205,16 +205,16 @@ public class ImmutableListViewIntFunctionCashed {
 
         @Override
         public ListIterator<T> listIterator() {
-            return listIterator(shift - 1);
+            return listIterator(0);
         }
 
         @Override
         public ListIterator<T> listIterator(int i) {
-            if (i < shift - 1 || i > this.upperBound) {
+            if (i < 0 || i > this.upperBound - this.shift + 1) {
                 throw new IndexOutOfBoundsException("index = " + i);
             }
             return new ListIterator<T>() {
-                private int current = i;
+                private int current = shift - 1 + i;
 
                 @Override
                 public boolean hasNext() {
@@ -246,12 +246,12 @@ public class ImmutableListViewIntFunctionCashed {
 
                 @Override
                 public int nextIndex() {
-                    return this.current + 1;
+                    return this.current == upperBound ? this.current : this.current + 1;
                 }
 
                 @Override
                 public int previousIndex() {
-                    return this.current - 1;
+                    return this.current == shift - 1 + i ? -1 : this.current - 1;
                 }
 
                 @Override
@@ -296,6 +296,8 @@ public class ImmutableListViewIntFunctionCashed {
         //System.out.println(immutableListView.contains(-5));
         //System.out.println(immutableListView.contains(-11));
         System.out.println(Arrays.toString(immutableListView.subList(10, 51).toArray()));
+        System.out.println("---------------------------------------------------------");
+
         immutableListView.add("3");
 
     }

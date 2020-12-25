@@ -170,16 +170,16 @@ public class ImmutableListView2 {
 
         @Override
         public ListIterator<Integer> listIterator() {
-            return listIterator(shift - 1);
+            return listIterator(0);
         }
 
         @Override
         public ListIterator<Integer> listIterator(int i) {
-            if (i < shift-1 || i > this.upperBound) {
+            if (i < 0 || i > this.upperBound-this.shift+1) {
                 throw new IndexOutOfBoundsException("index = " + i);
             }
-            return new ListIterator<Integer>() {
-                private int current = i;
+            return new ListIterator<>() {
+                private int current = shift - 1 + i;
 
                 @Override
                 public boolean hasNext() {
@@ -188,20 +188,20 @@ public class ImmutableListView2 {
 
                 @Override
                 public Integer next() {
-                    if(hasNext()) {
+                    if (hasNext()) {
                         return ++this.current;
                     }
-                        throw new IndexOutOfBoundsException("out of bound");
+                    throw new IndexOutOfBoundsException("out of bound");
                 }
 
                 @Override
                 public boolean hasPrevious() {
-                    return current > i;
+                    return current > shift - 1 + i;
                 }
 
                 @Override
                 public Integer previous() {
-                    if(hasPrevious()) {
+                    if (hasPrevious()) {
                         return --current;
                     }
                     throw new IndexOutOfBoundsException("out of bound");
@@ -209,12 +209,12 @@ public class ImmutableListView2 {
 
                 @Override
                 public int nextIndex() {
-                    return this.current + 1;
+                    return this.current ==upperBound? this.current :this.current+1;
                 }
 
                 @Override
                 public int previousIndex() {
-                    return this.current - 1;
+                    return   this.current==shift - 1 + i? -1: this.current - 1;
                 }
 
                 @Override
@@ -255,6 +255,11 @@ public class ImmutableListView2 {
         System.out.println();
         System.out.println(immutableListView.subList(5,11).subList(2,6).get(3));
         System.out.println(Arrays.toString(immutableListView.subList(5, 11).toArray()));
+        System.out.println();
+       ListIterator<Integer> listIterator= immutableListView.subList(5,11).listIterator(5);
+        System.out.println("next index " +listIterator.nextIndex());
+        System.out.println(listIterator.next());
+        System.out.println("next index " +listIterator.nextIndex());
         System.out.println();
         System.out.println(immutableListView.subList(5,11).get(11));
         immutableListView.add(3);

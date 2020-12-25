@@ -193,16 +193,16 @@ public class ImmutableListViewIntFunction3 {
 
         @Override
         public ListIterator<Integer> listIterator() {
-            return listIterator(shift - 1);
+            return listIterator(0);
         }
 
         @Override
         public ListIterator<Integer> listIterator(int i) {
-            if (i < shift-1 || i > this.upperBound) {
+            if (i < 0 || i > this.upperBound-this.shift+1) {
                 throw new IndexOutOfBoundsException("index = " + i);
             }
-            return new ListIterator<Integer>() {
-                private int current = i;
+            return new ListIterator<>() {
+                private int current = shift - 1 + i;
 
                 @Override
                 public boolean hasNext() {
@@ -232,12 +232,12 @@ public class ImmutableListViewIntFunction3 {
 
                 @Override
                 public int nextIndex() {
-                    return this.current + 1;
+                    return this.current ==upperBound? this.current :this.current+1;
                 }
 
                 @Override
                 public int previousIndex() {
-                    return this.current - 1;
+                    return   this.current==shift - 1 + i? -1: this.current - 1;
                 }
 
                 @Override
@@ -274,7 +274,9 @@ public class ImmutableListViewIntFunction3 {
                 = ImmutableListViewIntFunction3.getImmutableListView(10, p -> -p);
         immutableListView.forEach(System.out::println);
         System.out.println();
-        immutableListView.subList(2, 11).forEach(System.out::println);
+        for(int i:immutableListView.subList(2, 11).subList(2,7)){
+            System.out.println(i);
+        }
         System.out.println(immutableListView.contains(-5));
         System.out.println(immutableListView.contains(-11));
         immutableListView.add(3);
