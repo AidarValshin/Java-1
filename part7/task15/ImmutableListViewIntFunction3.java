@@ -79,17 +79,17 @@ public class ImmutableListViewIntFunction3 {
         public <T> T[] toArray(T[] ts) {
             Object[] array = null;
             int j=0;
-            if (ts.length > this.upperBound-shift+1) {
+            if (ts.length < this.upperBound-shift+1) {
                 array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound-shift+1);
                 for (int i = this.shift; i <= upperBound; i++) {
                     array[j++] = intFunction.apply(i);
                 }
             } else {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound-shift+1);
-                for (int i = this.shift; i < ts.length+this.shift; i++) {
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), ts.length);
+                for (int i = this.shift; i <= upperBound; i++) {
                     array[j++] = intFunction.apply(i);
                 }
-                for (int i = ts.length + this.shift; i <= upperBound; i++) {
+                for (int i = upperBound + 1; i < ts.length; i++) {
                     array[j++] = null;
                 }
             }
