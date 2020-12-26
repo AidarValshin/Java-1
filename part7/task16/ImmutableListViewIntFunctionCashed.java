@@ -91,7 +91,6 @@ public class ImmutableListViewIntFunctionCashed {
         @Override
         public <T> T[] toArray(T[] ts) {
             Object[] array;
-
             if (ts.length < this.upperBound - shift + 1) {
                 array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),
                         upperBound - shift + 1);
@@ -292,6 +291,9 @@ public class ImmutableListViewIntFunctionCashed {
         //System.out.println(immutableListView.contains(-5));
         //System.out.println(immutableListView.contains(-11));
         System.out.println(Arrays.toString(immutableListView.subList(10, 51).toArray()));
+        System.out.println("---------------------------------------------------------");
+        String [] str=new String[20];
+        System.out.println(Arrays.toString(immutableListView.subList(10, 20).toArray(str)));
         System.out.println("---------------------------------------------------------");
 
         immutableListView.add("3");

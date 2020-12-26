@@ -65,7 +65,7 @@ public class ImmutableListView2 {
 
         @Override
         public <T> T[] toArray(T[] ts) {
-            Object[] array = null;
+            Object[] array ;
             int j=0;
             if (ts.length < this.upperBound-shift+1) {
                 array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),

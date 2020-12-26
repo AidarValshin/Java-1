@@ -77,7 +77,7 @@ public class ImmutableListViewIntFunction3 {
 
         @Override
         public <T> T[] toArray(T[] ts) {
-            Object[] array = null;
+            Object[] array ;
             if (ts.length < this.upperBound - shift + 1) {
                 array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),
                         upperBound - shift + 1);
