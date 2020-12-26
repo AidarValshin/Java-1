@@ -1,7 +1,6 @@
 package main.ru.mephi.java.part7.task15;
 
 
-
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
@@ -36,14 +35,15 @@ public class ImmutableListViewIntFunction3 {
             this.upperBound = upperBound;
             this.shift = shift;
         }
+
         @Override
         public int size() {
-            return upperBound + 1-shift;
+            return upperBound + 1 - shift;
         }
 
         @Override
         public boolean isEmpty() {
-            return upperBound + 1 - shift>0;
+            return upperBound + 1 - shift > 0;
         }
 
         @Override
@@ -67,8 +67,8 @@ public class ImmutableListViewIntFunction3 {
 
         @Override
         public Object[] toArray() {
-            Integer[] array = new Integer[upperBound-shift+1];
-            int j=0;
+            Integer[] array = new Integer[upperBound - shift + 1];
+            int j = 0;
             for (int i = this.shift; i <= upperBound; i++) {
                 array[j++] = intFunction.apply(i);
             }
@@ -78,20 +78,16 @@ public class ImmutableListViewIntFunction3 {
         @Override
         public <T> T[] toArray(T[] ts) {
             Object[] array = null;
-            int j=0;
-            if (ts.length < this.upperBound-shift+1) {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound-shift+1);
-                for (int i = this.shift; i <= upperBound; i++) {
-                    array[j++] = intFunction.apply(i);
-                }
+            if (ts.length < this.upperBound - shift + 1) {
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),
+                        upperBound - shift + 1);
             } else {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), ts.length);
-                for (int i = this.shift; i <= upperBound; i++) {
-                    array[j++] = intFunction.apply(i);
-                }
-                for (int i = upperBound + 1; i < ts.length; i++) {
-                    array[j++] = null;
-                }
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),
+                        ts.length);
+            }
+            int j = 0;
+            for (int i = this.shift; i <= upperBound; i++) {
+                array[j++] = intFunction.apply(i);
             }
             return (T[]) array;
         }
@@ -143,10 +139,10 @@ public class ImmutableListViewIntFunction3 {
 
         @Override
         public Integer get(int i) {
-            if(i+shift<=upperBound && i>=0) {
+            if (i + shift <= upperBound && i >= 0) {
                 return intFunction.apply(i + shift);
             }
-            throw new IndexOutOfBoundsException(" your index is: "+i+", bound is: "+(upperBound-shift));
+            throw new IndexOutOfBoundsException(" your index is: " + i + ", bound is: " + (upperBound - shift));
         }
 
         @Override
@@ -170,7 +166,7 @@ public class ImmutableListViewIntFunction3 {
                 int oo = (int) o;
                 for (int i = shift; i <= upperBound; i++) {
                     if (intFunction.apply(i) == oo) {
-                        return i-shift;
+                        return i - shift;
                     }
                 }
             }
@@ -184,7 +180,7 @@ public class ImmutableListViewIntFunction3 {
                 int oo = (int) o;
                 for (int i = shift; i <= upperBound; i++) {
                     if (intFunction.apply(i) == oo) {
-                        index = i-shift;
+                        index = i - shift;
                     }
                 }
             }
@@ -198,7 +194,7 @@ public class ImmutableListViewIntFunction3 {
 
         @Override
         public ListIterator<Integer> listIterator(int i) {
-            if (i < 0 || i > this.upperBound-this.shift+1) {
+            if (i < 0 || i > this.upperBound - this.shift + 1) {
                 throw new IndexOutOfBoundsException("index = " + i);
             }
             return new ListIterator<>() {
@@ -211,7 +207,7 @@ public class ImmutableListViewIntFunction3 {
 
                 @Override
                 public Integer next() {
-                    if(hasNext()) {
+                    if (hasNext()) {
                         return intFunction.apply(++this.current);
                     }
                     throw new IndexOutOfBoundsException("out of bound");
@@ -224,7 +220,7 @@ public class ImmutableListViewIntFunction3 {
 
                 @Override
                 public Integer previous() {
-                    if(hasPrevious()) {
+                    if (hasPrevious()) {
                         return intFunction.apply(--current);
                     }
                     throw new IndexOutOfBoundsException("out of bound");
@@ -232,12 +228,12 @@ public class ImmutableListViewIntFunction3 {
 
                 @Override
                 public int nextIndex() {
-                    return this.current ==upperBound? this.current :this.current+1;
+                    return this.current == upperBound ? this.current : this.current + 1;
                 }
 
                 @Override
                 public int previousIndex() {
-                    return   this.current==shift - 1 + i? -1: this.current - 1;
+                    return this.current == shift - 1 + i ? -1 : this.current - 1;
                 }
 
                 @Override
@@ -260,12 +256,12 @@ public class ImmutableListViewIntFunction3 {
 
         @Override
         public List<Integer> subList(int from, int to) {
-            if (from >to
-                    || to > upperBound-shift+1
-                    || from < 0 ) {
-                throw new IllegalArgumentException("wrong bounds from: "+from+" to: "+ to);
+            if (from > to
+                    || to > upperBound - shift + 1
+                    || from < 0) {
+                throw new IllegalArgumentException("wrong bounds from: " + from + " to: " + to);
             }
-            return new ImmutableListView(this.shift+from, to+shift-1, intFunction);
+            return new ImmutableListView(this.shift + from, to + shift - 1, intFunction);
         }
     }
 
@@ -274,7 +270,7 @@ public class ImmutableListViewIntFunction3 {
                 = ImmutableListViewIntFunction3.getImmutableListView(10, p -> -p);
         immutableListView.forEach(System.out::println);
         System.out.println();
-        for(int i:immutableListView.subList(2, 11).subList(2,7)){
+        for (int i : immutableListView.subList(2, 11).subList(2, 7)) {
             System.out.println(i);
         }
         System.out.println(immutableListView.contains(-5));

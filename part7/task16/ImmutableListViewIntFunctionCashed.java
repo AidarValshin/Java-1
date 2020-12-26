@@ -25,7 +25,6 @@ public class ImmutableListViewIntFunctionCashed {
                 T result = intFunction.apply(index);
                 cash.put(index, result);
                 System.out.println("put or replace");
-
                 return result;
             }
         }
@@ -91,21 +90,18 @@ public class ImmutableListViewIntFunctionCashed {
 
         @Override
         public <T> T[] toArray(T[] ts) {
-            Object[] array = null;
-            int j = 0;
+            Object[] array;
+
             if (ts.length < this.upperBound - shift + 1) {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound - shift + 1);
-                for (int i = this.shift; i <= upperBound; i++) {
-                    array[j++] = getAppliedOrSetCash(i);
-                }
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),
+                        upperBound - shift + 1);
             } else {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), ts.length);
-                for (int i = this.shift; i <= upperBound; i++) {
-                    array[j++] = getAppliedOrSetCash(i);
-                }
-                for (int i = upperBound + 1; i < ts.length; i++) {
-                    array[j++] = null;
-                }
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),
+                        ts.length);
+            }
+            int j = 0;
+            for (int i = this.shift; i <= upperBound; i++) {
+                array[j++] = getAppliedOrSetCash(i);
             }
             return (T[]) array;
         }

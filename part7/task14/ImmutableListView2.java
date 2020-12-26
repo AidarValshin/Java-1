@@ -68,18 +68,14 @@ public class ImmutableListView2 {
             Object[] array = null;
             int j=0;
             if (ts.length < this.upperBound-shift+1) {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), upperBound-shift+1);
-                for (int i = this.shift; i <= upperBound; i++) {
-                    array[j++] = i;
-                }
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),
+                        upperBound-shift+1);
             } else {
-                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(), ts.length);
-                for (int i = this.shift; i <= upperBound; i++) {
-                    array[j++] = i;
-                }
-                for (int i = upperBound + 1; i < ts.length; i++) {
-                    array[j++] = null;
-                }
+                array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),
+                        ts.length);
+            }
+            for (int i = this.shift; i <= upperBound; i++) {
+                array[j++] = i;
             }
             return (T[]) array;
         }
