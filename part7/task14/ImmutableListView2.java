@@ -269,7 +269,8 @@ public class ImmutableListView2 {
         System.out.println(listIterator.previous());
         System.out.println("next index " + listIterator.nextIndex());
         System.out.println("previous index " + listIterator.previousIndex());
-        System.out.println(listIterator.previous());
+        //System.out.println(listIterator.previous());
+        System.out.println(listIterator.next());
         System.out.println();
         System.out.println(immutableListView.subList(5, 11).get(11));
         immutableListView.add(3);

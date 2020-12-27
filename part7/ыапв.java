@@ -23,5 +23,6 @@ public class ћрят {
         System.out.println("--------------------");
         System.out.println(listIterator.previousIndex());//-1
         System.out.println(listIterator.nextIndex());//0
+        System.out.println(listIterator.next());//1
     }
 }
