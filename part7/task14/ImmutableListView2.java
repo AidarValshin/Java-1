@@ -55,9 +55,9 @@ public class ImmutableListView2 {
 
         @Override
         public Object[] toArray() {
-            Integer[] array = new Integer[upperBound - shift + 1];
+            Integer[] array = new Integer[size()];
             int j = 0;
-            for (int i = this.shift; i <= upperBound; i++) {
+            for (int i = shift; i <= upperBound; i++) {
                 array[j++] = i;
             }
             return array;
@@ -67,14 +67,14 @@ public class ImmutableListView2 {
         public <T> T[] toArray(T[] ts) {
             Object[] array;
             int j = 0;
-            if (ts.length < this.upperBound - shift + 1) {
+            if (ts.length < size()) {
                 array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),
-                        upperBound - shift + 1);
+                        size());
             } else {
                 array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),
                         ts.length);
             }
-            for (int i = this.shift; i <= upperBound; i++) {
+            for (int i = shift; i <= upperBound; i++) {
                 array[j++] = i;
             }
             return (T[]) array;
@@ -171,7 +171,7 @@ public class ImmutableListView2 {
 
         @Override
         public ListIterator<Integer> listIterator(int i) {
-            if (i < 0 || i > this.upperBound - this.shift + 1) {
+            if (i < 0 || i > size()) {
                 throw new IndexOutOfBoundsException("index = " + i);
             }
             return new ListIterator<>() {
@@ -179,13 +179,13 @@ public class ImmutableListView2 {
 
                 @Override
                 public boolean hasNext() {
-                    return this.current < upperBound;
+                    return current < upperBound;
                 }
 
                 @Override
                 public Integer next() {
                     if (hasNext()) {
-                        return ++this.current;
+                        return ++current;
                     }
                     throw new IndexOutOfBoundsException("out of bound");
                 }
@@ -205,12 +205,12 @@ public class ImmutableListView2 {
 
                 @Override
                 public int nextIndex() {
-                    return this.current == upperBound ? this.current - shift + 1 : this.current + 1 - shift;
+                    return current == upperBound ? current - shift + 1 : current + 1 - shift;
                 }
 
                 @Override
                 public int previousIndex() {
-                    return this.current == shift - 1 ? -1 : this.current - shift;
+                    return current == shift - 1 ? -1 : current - shift;
                 }
 
                 @Override
@@ -233,11 +233,11 @@ public class ImmutableListView2 {
         @Override
         public List<Integer> subList(int from, int to) {
             if (from > to
-                    || to > upperBound - shift + 1
+                    || to > size()
                     || from < 0) {
                 throw new IllegalArgumentException("wrong bounds from: " + from + " to: " + to);
             }
-            return new ImmutableListView(this.shift + from, to + shift - 1);
+            return new ImmutableListView(shift + from, to + shift - 1);
         }
     }
 
