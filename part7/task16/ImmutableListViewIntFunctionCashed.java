@@ -246,7 +246,7 @@ public class ImmutableListViewIntFunctionCashed {
 
                 @Override
                 public int nextIndex() {
-                    return current == upperBound ? current - shift + 1 : current + 1 - shift;
+                    return current + 1 - shift;
                 }
 
                 @Override
