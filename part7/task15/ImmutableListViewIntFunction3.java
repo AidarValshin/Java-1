@@ -77,7 +77,7 @@ public class ImmutableListViewIntFunction3 {
 
         @Override
         public <T> T[] toArray(T[] ts) {
-            Object[] array ;
+            Object[] array;
             if (ts.length < this.upperBound - shift + 1) {
                 array = (Object[]) Array.newInstance(ts.getClass().getComponentType(),
                         upperBound - shift + 1);
@@ -215,25 +215,25 @@ public class ImmutableListViewIntFunction3 {
 
                 @Override
                 public boolean hasPrevious() {
-                    return current > shift;
+                    return current > shift - 1;
                 }
 
                 @Override
                 public Integer previous() {
                     if (hasPrevious()) {
-                        return intFunction.apply(--current);
+                        return intFunction.apply(current--);
                     }
                     throw new IndexOutOfBoundsException("out of bound");
                 }
 
                 @Override
                 public int nextIndex() {
-                    return this.current == upperBound ? this.current : this.current + 1;
+                    return this.current == upperBound ? this.current - shift + 1 : this.current + 1 - shift;
                 }
 
                 @Override
                 public int previousIndex() {
-                    return this.current == shift - 1 + i ? -1 : this.current - 1;
+                    return this.current == shift - 1 ? -1 : this.current - shift;
                 }
 
                 @Override

@@ -7,8 +7,10 @@ import java.util.List;
 public class Checked {
     public static void main(String[] args) {
         List integerChecked= Collections.checkedList(new ArrayList<>(),Integer.class);
-        List ints=new ArrayList();
-        ints.add("sdf");
-        integerChecked.add("sdf");
+        List<String> str=new ArrayList<>();
+        str.add("sdf");
+        integerChecked.addAll(str);
+      //  integerChecked.add("sdf");
+
     }
 }

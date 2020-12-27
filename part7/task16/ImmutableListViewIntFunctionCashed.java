@@ -4,6 +4,7 @@ import main.ru.mephi.java.part7.task13.Cache;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.IntFunction;
 
 public class ImmutableListViewIntFunctionCashed {
@@ -39,10 +40,10 @@ public class ImmutableListViewIntFunctionCashed {
         }
 
         public ImmutableListView(int shift, int upperBound, IntFunction<T> intFunction) {
-            this.intFunction = intFunction;
             if (upperBound < shift || upperBound < 0 || shift < 0) {
                 throw new IllegalArgumentException();
             }
+            this.intFunction = intFunction;
             this.upperBound = upperBound;
             this.shift = shift;
         }
@@ -55,7 +56,7 @@ public class ImmutableListViewIntFunctionCashed {
 
         @Override
         public boolean isEmpty() {
-            return upperBound + 1 - shift > 0;
+            return size() == 0;
         }
 
         @Override
@@ -65,7 +66,6 @@ public class ImmutableListViewIntFunctionCashed {
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -75,11 +75,17 @@ public class ImmutableListViewIntFunctionCashed {
         }
 
         @Override
-        public Object[] toArray() {
+        public void forEach(Consumer<? super T> action) {
+            for (int i = shift; i <= upperBound; i++) {
+                action.accept(getAppliedOrSetCash(i));
+            }
+        }
 
+        @Override
+        public Object[] toArray() {
             @SuppressWarnings("unchecked")
-            T[] array = (T[]) Array.newInstance(
-                    intFunction.apply(0).getClass(),
+            Object[] array = (Object[]) Array.newInstance(
+                    getAppliedOrSetCash(0).getClass(),
                     upperBound - shift + 1);
             int j = 0;
             for (int i = this.shift; i <= upperBound; i++) {
@@ -183,7 +189,6 @@ public class ImmutableListViewIntFunctionCashed {
                     return i - shift;
                 }
             }
-
             return -1;
         }
 
@@ -205,7 +210,7 @@ public class ImmutableListViewIntFunctionCashed {
 
         @Override
         public ListIterator<T> listIterator(int i) {
-            if (i < 0 || i > this.upperBound - this.shift + 1) {
+            if (i < 0 || i > size()) {
                 throw new IndexOutOfBoundsException("index = " + i);
             }
             return new ListIterator<T>() {
@@ -227,13 +232,13 @@ public class ImmutableListViewIntFunctionCashed {
 
                 @Override
                 public boolean hasPrevious() {
-                    return current > shift;
+                    return current > shift - 1;
                 }
 
                 @Override
                 public T previous() {
                     if (hasPrevious()) {
-                        return getAppliedOrSetCash(--current);
+                        return getAppliedOrSetCash(current--);
                     }
                     throw new IndexOutOfBoundsException("out of bound");
 
@@ -241,12 +246,12 @@ public class ImmutableListViewIntFunctionCashed {
 
                 @Override
                 public int nextIndex() {
-                    return this.current == upperBound ? this.current : this.current + 1;
+                    return this.current == upperBound ? this.current - shift + 1 : this.current + 1 - shift;
                 }
 
                 @Override
                 public int previousIndex() {
-                    return this.current == shift - 1 + i ? -1 : this.current - 1;
+                    return this.current == shift - 1 ? -1 : this.current - shift;
                 }
 
                 @Override
@@ -290,12 +295,13 @@ public class ImmutableListViewIntFunctionCashed {
         }
         //System.out.println(immutableListView.contains(-5));
         //System.out.println(immutableListView.contains(-11));
-        System.out.println(Arrays.toString(immutableListView.subList(10, 51).toArray()));
+        List<String> strings = immutableListView.subList(10, 20);
+        System.out.println(Arrays.toString(strings.toArray()));
         System.out.println("---------------------------------------------------------");
-        String [] str=new String[20];
-        System.out.println(Arrays.toString(immutableListView.subList(10, 20).toArray(str)));
+        String[] str = new String[20];
+        System.out.println(Arrays.toString(strings.toArray(str)));
         System.out.println("---------------------------------------------------------");
-
+        immutableListView.forEach(System.out::println);
         immutableListView.add("3");
 
     }
